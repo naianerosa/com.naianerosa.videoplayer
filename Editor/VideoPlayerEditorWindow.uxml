@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement>
+<!--         <ui:ObjectField name="playlist-object-field" label="Video Playlist" object-type="VideoPlaylist" />
+ -->    
+        <uie:ObjectField name="playlist-object-field" label="Video Playlist" object-type="VideoPlaylist" />
+        <ui:Label name="current-video-label" text="No video selected" />
+        <ui:VisualElement name="controls" style="flex-direction: row;">
+            <ui:Button name="prev-button" text="Previous" />
+            <ui:Button name="play-button" text="Play" />
+            <ui:Button name="pause-button" text="Pause" />
+            <ui:Button name="stop-button" text="Stop" />
+            <ui:Button name="next-button" text="Next" />
+        </ui:VisualElement>
+        <ui:VisualElement name="video-container" style="height: 400px;" />
+    </ui:VisualElement>
+</ui:UXML>
