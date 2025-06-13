@@ -19,11 +19,12 @@ public class VideoPlayerEditorWindow : EditorWindow
     private VideoPlayer player;
     private VisualElement videoContainer;
     private Label currentVideoLabel;
-
+    private Button play;
     private RenderTexture renderTexture;
     private IMGUIContainer videoDisplay;
     private ScrollView playlistScrollView;
     private long pausedFrame = -1;
+    private Texture playImage;
 
     public void CreateGUI()
     {
@@ -37,13 +38,48 @@ public class VideoPlayerEditorWindow : EditorWindow
         videoContainer = root.Q<VisualElement>("video-container");
         currentVideoLabel = root.Q<Label>("current-video-label");
 
-        root.Q<Button>("play-button").clicked += Play;
-        root.Q<Button>("pause-button").clicked += Pause;
-        root.Q<Button>("stop-button").clicked += Stop;
-        root.Q<Button>("next-button").clicked += Next;
-        root.Q<Button>("prev-button").clicked += Previous;
+        play = root.Q<Button>("play-button");
+        //var playButton = root.Q<Button>("play-button");
+        play.text = ""; // Hide text
+        //var button = new Button();
+        playImage = EditorGUIUtility.IconContent("d_PlayButton@2x").image;
+        play.Add(new Image
+        {
+            image = playImage,
+        });
+        
+
+        play.clicked += PlayPause;
+
+        
+
+        var stop = root.Q<Button>("stop-button");
+        stop.text = ""; // Hide text
+        stop.Add(new Image
+        {
+            image = EditorGUIUtility.IconContent("d_StopButton@2x").image,
+        });
+        stop.clicked += Stop;
+
+        var next = root.Q<Button>("next-button");
+        next.text = ""; // Hide text]
+        next.Add(new Image
+        {
+            image = EditorGUIUtility.IconContent("Animation.NextKey").image,
+        });
+        next.clicked += Next;
+
+        var prev = root.Q<Button>("prev-button");
+        prev.text = ""; // Hide text]
+        prev.Add(new Image
+        {
+            image = EditorGUIUtility.IconContent("Animation.PrevKey").image,
+        });
+
+        prev.clicked += Previous;
         playlistScrollView = root.Q<ScrollView>("playlist-scroll-view");
 
+        //videoContainer.
 
         root.Q<ObjectField>("playlist-object-field").RegisterValueChangedCallback(evt =>
         {
@@ -87,7 +123,8 @@ public class VideoPlayerEditorWindow : EditorWindow
         videoDisplay = new IMGUIContainer(DrawVideoFrame);
         videoDisplay.style.height = 300;
         videoDisplay.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f);
-        root.Q<VisualElement>("video-container").Add(videoDisplay);
+        //var videoContainer = root.Q<VisualElement>("video-container");
+        videoContainer.Add(videoDisplay);
 
         EditorApplication.update += Repaint;
         videoDisplay.onGUIHandler = DrawVideoFrame;
@@ -140,13 +177,30 @@ public class VideoPlayerEditorWindow : EditorWindow
         var aspect = (float)renderTexture.width / renderTexture.height;
         float width = videoDisplay.contentRect.width;
         float height = width / aspect;
+        videoContainer.style.height = height;
 
         var rect = GUILayoutUtility.GetRect(width, height, GUILayout.ExpandWidth(false));        
         GUI.DrawTexture(rect, renderTexture);
     }
+     
+    private void PlayPause()
+    {
+        if(!player.isPlaying || player.isPaused)
+        {
+         
+            play.Q<Image>().image = EditorGUIUtility.IconContent("d_PauseButton@2x").image;            
+            Play();
+        }
+        else
+        {
+            
+            play.Q<Image>().image = EditorGUIUtility.IconContent("d_PlayButton@2x").image;           
+            Pause();
+        }
+    }
 
     private void Play()
-    {
+    {        
         if (player.url == null && !string.IsNullOrEmpty(GetCurrentFilePath()))
         {
 

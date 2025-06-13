@@ -1,15 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement>
+    <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow.uss?fileID=7433441132597879392&amp;guid=0d19bbabcac07074a869e0e4e7e37784&amp;type=3#VideoPlayerEditorWindow" />
+    <ui:VisualElement name="root" class="video-player-root">
         <uie:ObjectField name="playlist-object-field" label="Video Playlist" type="VideoPlaylist, VideoPlayer.Editor" />
-        <ui:Label name="current-video-label" text="No video selected" />
-        <ui:VisualElement name="controls" style="flex-direction: row;">
-            <ui:Button name="prev-button" text="Previous" />
-            <ui:Button name="play-button" text="Play" />
-            <ui:Button name="pause-button" text="Pause" />
-            <ui:Button name="stop-button" text="Stop" />
-            <ui:Button name="next-button" text="Next" />
+        <ui:Label name="current-video-label" text="No video selected" class="title" />
+        <ui:VisualElement name="header" class="header-container">
+            <ui:VisualElement name="video-container" />
+            <ui:VisualElement name="controls" class="controls">
+                <ui:Button name="prev-button" text="P" />
+                <ui:Button name="play-button" text="P" />
+                <ui:Button name="pause-button" text="Pa" style="visibility: visible; display: none;" />
+                <ui:Button name="stop-button" text="S" />
+                <ui:Button name="next-button" text="N" />
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="video-container" style="height: 400px;" />
-        <ui:ScrollView name="playlist-scroll-view" style="flex-grow: 1; height: 200px;" />
+        <ui:ScrollView name="playlist-scroll-view" class="playlist" />
     </ui:VisualElement>
 </ui:UXML>
