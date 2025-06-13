@@ -23,6 +23,7 @@ public class VideoPlayerEditorWindow : EditorWindow
     private RenderTexture renderTexture;
     private IMGUIContainer videoDisplay;
     private ScrollView playlistScrollView;
+    private long pausedFrame = -1;
 
     public void CreateGUI()
     {
@@ -58,6 +59,7 @@ public class VideoPlayerEditorWindow : EditorWindow
         go.hideFlags = HideFlags.HideAndDontSave;
         player = go.GetComponent<VideoPlayer>();
         player.playOnAwake = false;
+        //player.timeReference = VideoTimeReference.InternalTime;
         //player.audioOutputMode = VideoAudioOutputMode.None;
         //AudioSource audioSource = player.gameObject.AddComponent<AudioSource>();
         //player.audioOutputMode = VideoAudioOutputMode.AudioSource;
@@ -67,6 +69,12 @@ public class VideoPlayerEditorWindow : EditorWindow
         player.targetTexture = renderTexture;
         //player.controlledAudioTrackCount = 1;
         //player.EnableAudioTrack(0, true);
+        //player.frameReady += (vp, frameIdx) =>
+        //{
+        //    //Debug.Log($"Frame Ready: {frameIdx}");
+        //    // This is where you could handle frame updates if needed
+        //    DrawVideoFrame();
+        //};
 
 
         //player = new GameObject("EditorVideoPlayer").AddComponent<VideoPlayer>();
@@ -127,32 +135,39 @@ public class VideoPlayerEditorWindow : EditorWindow
 
     private void DrawVideoFrame()
     {
-        //if (renderTexture != null)
-        //{
-        //    var rect = GUILayoutUtility.GetRect(renderTexture.width, renderTexture.height, GUILayout.ExpandWidth(false));
-        //    EditorGUI.DrawPreviewTexture(rect, renderTexture);
-        //}
-
         if (renderTexture == null) return;
 
         var aspect = (float)renderTexture.width / renderTexture.height;
         float width = videoDisplay.contentRect.width;
         float height = width / aspect;
 
-        var rect = GUILayoutUtility.GetRect(width, height, GUILayout.ExpandWidth(false));
-        EditorGUI.DrawPreviewTexture(rect, renderTexture);
+        var rect = GUILayoutUtility.GetRect(width, height, GUILayout.ExpandWidth(false));        
+        GUI.DrawTexture(rect, renderTexture);
     }
 
     private void Play()
     {
-        if (player.clip == null && !string.IsNullOrEmpty(GetCurrentFilePath()))
+        if (player.url == null && !string.IsNullOrEmpty(GetCurrentFilePath()))
         {
+
             player.url = GetCurrentFilePath();
+            player.Prepare();
         }
+
+        if (pausedFrame > 0)
+        {
+            player.frame = pausedFrame;
+            pausedFrame = -1;
+        }
+
         player.Play();
     }
 
-    private void Pause() => player.Pause();
+    private void Pause()
+    {
+        player.Pause();
+        pausedFrame = player.frame;
+    }
     private void Stop() => player.Stop();
 
     private void Next()
