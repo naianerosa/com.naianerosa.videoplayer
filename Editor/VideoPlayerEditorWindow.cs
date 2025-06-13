@@ -54,17 +54,19 @@ public class VideoPlayerEditorWindow : EditorWindow
 
         // Create RenderTexture and VideoPlayer
         renderTexture = new RenderTexture(512, 288, 0); // 16:9 aspect ratio
-        player = new GameObject("EditorVideoPlayer", typeof(VideoPlayer)).GetComponent<VideoPlayer>();
+        var go = new GameObject("EditorVideoPlayer", typeof(VideoPlayer), typeof(AudioSource));
+        go.hideFlags = HideFlags.HideAndDontSave;
+        player = go.GetComponent<VideoPlayer>();
         player.playOnAwake = false;
         //player.audioOutputMode = VideoAudioOutputMode.None;
-        AudioSource audioSource = player.gameObject.AddComponent<AudioSource>();
-        player.audioOutputMode = VideoAudioOutputMode.AudioSource;
-        player.SetTargetAudioSource(0, audioSource);
+        //AudioSource audioSource = player.gameObject.AddComponent<AudioSource>();
+        //player.audioOutputMode = VideoAudioOutputMode.AudioSource;
+        //player.SetTargetAudioSource(0, audioSource);
 
         player.renderMode = VideoRenderMode.RenderTexture;
         player.targetTexture = renderTexture;
-        player.controlledAudioTrackCount = 1;
-        player.EnableAudioTrack(0, true);
+        //player.controlledAudioTrackCount = 1;
+        //player.EnableAudioTrack(0, true);
 
 
         //player = new GameObject("EditorVideoPlayer").AddComponent<VideoPlayer>();
@@ -96,11 +98,11 @@ public class VideoPlayerEditorWindow : EditorWindow
             button.userData = i;
 
             button.clicked += () =>
-            {                
+            {
                 currentIndex = (int)button.userData;
                 UpdateCurrentVideo();
                 Play();
-                
+
             };
 
             playlistScrollView.Add(button);
@@ -112,7 +114,7 @@ public class VideoPlayerEditorWindow : EditorWindow
         var allVideos = playlistScrollView.Query<Button>().ToList();
         foreach (var button in allVideos)
         {
-            if(button.userData is int index && index == currentIndex)
+            if (button.userData is int index && index == currentIndex)
             {
                 button.AddToClassList("current-video-highlight");
             }
@@ -120,7 +122,7 @@ public class VideoPlayerEditorWindow : EditorWindow
             {
                 button.RemoveFromClassList("current-video-highlight");
             }
-        }        
+        }
     }
 
     private void DrawVideoFrame()
@@ -186,8 +188,8 @@ public class VideoPlayerEditorWindow : EditorWindow
         }
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        DestroyImmediate(player.gameObject);
+        DestroyImmediate(player?.gameObject);
     }
 }
