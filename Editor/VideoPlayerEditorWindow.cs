@@ -61,9 +61,9 @@ public class VideoPlayerEditorWindow : EditorWindow
         player.playOnAwake = false;
         //player.timeReference = VideoTimeReference.InternalTime;
         //player.audioOutputMode = VideoAudioOutputMode.None;
-        //AudioSource audioSource = player.gameObject.AddComponent<AudioSource>();
-        //player.audioOutputMode = VideoAudioOutputMode.AudioSource;
-        //player.SetTargetAudioSource(0, audioSource);
+        AudioSource audioSource = player.gameObject.AddComponent<AudioSource>();
+        player.audioOutputMode = VideoAudioOutputMode.AudioSource;
+        player.SetTargetAudioSource(0, audioSource);
 
         player.renderMode = VideoRenderMode.RenderTexture;
         player.targetTexture = renderTexture;
