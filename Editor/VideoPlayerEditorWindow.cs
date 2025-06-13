@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -21,13 +22,14 @@ public class VideoPlayerEditorWindow : EditorWindow
 
     private RenderTexture renderTexture;
     private IMGUIContainer videoDisplay;
+    private ScrollView playlistScrollView;
 
     public void CreateGUI()
     {
         var root = rootVisualElement;
 
         var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow.uxml");
-        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow.uxml");
+        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow.uss");
         root.styleSheets.Add(styleSheet);
         visualTree.CloneTree(root);
 
@@ -39,12 +41,15 @@ public class VideoPlayerEditorWindow : EditorWindow
         root.Q<Button>("stop-button").clicked += Stop;
         root.Q<Button>("next-button").clicked += Next;
         root.Q<Button>("prev-button").clicked += Previous;
+        playlistScrollView = root.Q<ScrollView>("playlist-scroll-view");
+
 
         root.Q<ObjectField>("playlist-object-field").RegisterValueChangedCallback(evt =>
         {
             playlist = evt.newValue as VideoPlaylist;
             currentIndex = 0;
             UpdateCurrentVideo();
+            PopulatePlaylistUI();
         });
 
         // Create RenderTexture and VideoPlayer
@@ -76,6 +81,46 @@ public class VideoPlayerEditorWindow : EditorWindow
 
         EditorApplication.update += Repaint;
         videoDisplay.onGUIHandler = DrawVideoFrame;
+    }
+
+    private void PopulatePlaylistUI()
+    {
+        playlistScrollView.Clear();
+
+        if (playlist == null || playlist.videoClips == null) return;
+
+        for (int i = 0; i < playlist.videoClips.Count; i++)
+        {
+            var button = new Button();
+            button.text = playlist.videoClips[i].name;
+            button.userData = i;
+
+            button.clicked += () =>
+            {                
+                currentIndex = (int)button.userData;
+                UpdateCurrentVideo();
+                Play();
+                
+            };
+
+            playlistScrollView.Add(button);
+        }
+    }
+
+    private void UpdateListView()
+    {
+        var allVideos = playlistScrollView.Query<Button>().ToList();
+        foreach (var button in allVideos)
+        {
+            if(button.userData is int index && index == currentIndex)
+            {
+                button.AddToClassList("current-video-highlight");
+            }
+            else
+            {
+                button.RemoveFromClassList("current-video-highlight");
+            }
+        }        
     }
 
     private void DrawVideoFrame()
@@ -137,6 +182,7 @@ public class VideoPlayerEditorWindow : EditorWindow
         if (path != null)
         {
             player.url = path;
+            UpdateListView();
         }
     }
 

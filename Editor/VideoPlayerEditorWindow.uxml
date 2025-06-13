@@ -1,7 +1,5 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:VisualElement>
-<!--         <ui:ObjectField name="playlist-object-field" label="Video Playlist" object-type="VideoPlaylist" />
- -->    
         <uie:ObjectField name="playlist-object-field" label="Video Playlist" type="VideoPlaylist, VideoPlayer.Editor" />
         <ui:Label name="current-video-label" text="No video selected" />
         <ui:VisualElement name="controls" style="flex-direction: row;">
@@ -12,5 +10,6 @@
             <ui:Button name="next-button" text="Next" />
         </ui:VisualElement>
         <ui:VisualElement name="video-container" style="height: 400px;" />
+        <ui:ScrollView name="playlist-scroll-view" style="flex-grow: 1; height: 200px;" />
     </ui:VisualElement>
 </ui:UXML>

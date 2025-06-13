@@ -2,3 +2,8 @@
     background-color: #222;
     margin-top: 10px;
 }
+
+.current-video-highlight {
+    background-color: #3a8ee6;
+    color: white;
+}
