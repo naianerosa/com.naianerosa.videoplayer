@@ -2,7 +2,7 @@
     <ui:VisualElement>
 <!--         <ui:ObjectField name="playlist-object-field" label="Video Playlist" object-type="VideoPlaylist" />
  -->    
-        <uie:ObjectField name="playlist-object-field" label="Video Playlist" object-type="VideoPlaylist" />
+        <uie:ObjectField name="playlist-object-field" label="Video Playlist" type="VideoPlaylist, VideoPlayer.Editor" />
         <ui:Label name="current-video-label" text="No video selected" />
         <ui:VisualElement name="controls" style="flex-direction: row;">
             <ui:Button name="prev-button" text="Previous" />
