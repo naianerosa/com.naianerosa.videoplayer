@@ -26,6 +26,7 @@ public class VideoPlayerEditorWindow : EditorWindow
     private long pausedFrame = -1;
     private Texture playImage;
     private TemplateContainer playlistItemTemplate;
+    private VideoPlayerComponent videoPlayerComponent;
 
     public void CreateGUI()
     {
@@ -50,9 +51,15 @@ public class VideoPlayerEditorWindow : EditorWindow
         });
 
 
-        play.clicked += PlayPause;
+        play.clicked += Play;
 
-
+        var pause = root.Q<Button>("pause-button");        
+        pause.text = ""; 
+        pause.Add(new Image
+        {
+            image = EditorGUIUtility.IconContent("d_PauseButton@2x").image,
+        });
+        pause.clicked += Pause;
 
         var stop = root.Q<Button>("stop-button");
         stop.text = ""; // Hide text
@@ -82,13 +89,7 @@ public class VideoPlayerEditorWindow : EditorWindow
 
         //videoContainer.
 
-        root.Q<ObjectField>("playlist_picker").RegisterValueChangedCallback(evt =>
-        {
-            playlist = evt.newValue as VideoPlaylist;
-            currentIndex = 0;
-            UpdateCurrentVideo();
-            PopulatePlaylistUI();
-        });
+       
 
         // Create RenderTexture and VideoPlayer
         renderTexture = new RenderTexture(512, 288, 0); // 16:9 aspect ratio
@@ -130,11 +131,26 @@ public class VideoPlayerEditorWindow : EditorWindow
         EditorApplication.update += Repaint;
         videoDisplay.onGUIHandler = DrawVideoFrame;
 
+        root.Q<ObjectField>("playlist_picker").RegisterValueChangedCallback(evt =>
+        {
+            playlist = evt.newValue as VideoPlaylist;
+
+            videoPlayerComponent.Load(playlist, player);
+            videoContainer.dataSource = videoPlayerComponent.PlayListVM;
+
+            currentIndex = 0;
+            videoPlayerComponent.StartVideo(currentIndex);
+            //UpdateCurrentVideo();
+            PopulatePlaylistUI();
+        });
+
         playlistItemTemplate = root.Q<TemplateContainer>("playlist-item");
+
+        videoPlayerComponent = new VideoPlayerComponent();
     }
 
     private void PopulatePlaylistUI()
-    {        
+    {
         playlistContainer.Clear();
 
         if (playlist == null || playlist.videoClips == null) return;
@@ -142,30 +158,33 @@ public class VideoPlayerEditorWindow : EditorWindow
         for (int i = 0; i < playlist.videoClips.Count; i++)
         {
             var item = playlistItemTemplate.templateSource.CloneTree();
-            //var item = new VisualElement();
-            //item.AddToClassList("video-list-item");
-            var label = item.Q<Label>("playlist-item-label");
-            label.text = playlist.videoClips[i].name;
+            item.dataSource = videoPlayerComponent.VideoClips[i];
 
-            var button = item.Q<Button>("playlist-item-button");
-            //button.AddToClassList("button");
-            //button.AddToClassList("button-small");
-            button.text = "";
-            button.Add(new Image
+            var playButton = item.Q<Button>("playlist-item-button-play");
+            playButton.text = "";
+            playButton.Add(new Image
             {
                 image = EditorGUIUtility.IconContent("d_PlayButton").image,
             });
-            button.userData = i;
-            button.clicked += () =>
+            playButton.userData = i;
+            playButton.clicked += () =>
             {
-                currentIndex = (int)button.userData;
-                UpdateCurrentVideo();
-                Play();
-
+                currentIndex = (int)playButton.userData;
+                videoPlayerComponent.PlayVideo(currentIndex);
             };
 
-            //item.Add(label);
-            //item.Add(button);
+            var pauseButton = item.Q<Button>("playlist-item-button-pause");
+            pauseButton.text = "";
+            pauseButton.Add(new Image
+            {
+                image = EditorGUIUtility.IconContent("d_PauseButton").image,
+            });
+            pauseButton.userData = i;
+            pauseButton.clicked += () =>
+            {
+                currentIndex = (int)playButton.userData;
+                videoPlayerComponent.PauseVideo(currentIndex);
+            };
 
             playlistContainer.Add(item);
         }
@@ -224,26 +243,29 @@ public class VideoPlayerEditorWindow : EditorWindow
 
     private void Play()
     {
-        if (player.url == null && !string.IsNullOrEmpty(GetCurrentFilePath()))
-        {
+        //if (player.url == null && !string.IsNullOrEmpty(GetCurrentFilePath()))
+        //{
 
-            player.url = GetCurrentFilePath();
-            player.Prepare();
-        }
+        //    player.url = GetCurrentFilePath();
+        //    player.Prepare();
+        //}
 
-        if (pausedFrame > 0)
-        {
-            player.frame = pausedFrame;
-            pausedFrame = -1;
-        }
+        videoPlayerComponent.PlayVideo(currentIndex);
 
-        player.Play();
+        //if (pausedFrame > 0)
+        //{
+        //    player.frame = pausedFrame;
+        //    pausedFrame = -1;
+        //}
+
+        //player.Play();
     }
 
     private void Pause()
     {
-        player.Pause();
-        pausedFrame = player.frame;
+        //player.Pause();
+        //pausedFrame = player.frame;
+        videoPlayerComponent.PauseVideo(currentIndex);
     }
     private void Stop() => player.Stop();
 
@@ -251,14 +273,16 @@ public class VideoPlayerEditorWindow : EditorWindow
     {
         if (playlist == null || playlist.videoClips.Count == 0) return;
         currentIndex = (currentIndex + 1) % playlist.videoClips.Count;
-        UpdateCurrentVideo();
+       // UpdateCurrentVideo();
+        videoPlayerComponent.StartVideo(currentIndex);
     }
 
     private void Previous()
     {
         if (playlist == null || playlist.videoClips.Count == 0) return;
         currentIndex = (currentIndex - 1 + playlist.videoClips.Count) % playlist.videoClips.Count;
-        UpdateCurrentVideo();
+        //UpdateCurrentVideo();
+        videoPlayerComponent.StartVideo(currentIndex);
     }
 
     private string GetCurrentFilePath()
@@ -268,17 +292,17 @@ public class VideoPlayerEditorWindow : EditorWindow
         return playlist.videoClips[currentIndex].filePath;
     }
 
-    private void UpdateCurrentVideo()
-    {
-        Stop();
-        string path = GetCurrentFilePath();
-        //currentVideoLabel.text = path != null ? System.IO.Path.GetFileName(path) : "No video selected";
-        if (path != null)
-        {
-            player.url = path;
-            UpdateListView();
-        }
-    }
+    //private void UpdateCurrentVideo()
+    //{
+    //    Stop();
+    //    string path = GetCurrentFilePath();
+    //    //currentVideoLabel.text = path != null ? System.IO.Path.GetFileName(path) : "No video selected";
+    //    if (path != null)
+    //    {
+    //        player.url = path;
+    //        UpdateListView();
+    //    }
+    //}
 
     private void OnDisable()
     {
