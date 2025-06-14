@@ -41,7 +41,7 @@ public class VideoClipEntry
 }
 
 [CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/VideoClipVM")]
-public class VideoClipVM:ScriptableObject
+public class VideoClipVM : ScriptableObject
 {
     public string Title;
     public DisplayStyle PlayButtonVisibility;
@@ -62,7 +62,7 @@ public class VideoClipVM:ScriptableObject
 }
 
 [CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/VideoPlayListVM")]
-public class VideoPlayListVM:ScriptableObject
+public class VideoPlayListVM : ScriptableObject
 {
     public string Title;
     public DisplayStyle PlayButtonVisibility;
@@ -136,23 +136,26 @@ public class VideoPlayerComponent
         playlistVM.Play();
     }
 
-    public void PauseVideo(int index = -1)
+    public void PauseVideo(int index)
     {
         videoPlayer.Pause();
         pausedFrame = videoPlayer.frame;
 
-        if (index == -1)
-        {
-            currentVideoClipVM?.Pause();
-        }
-        else
-        {
-            videoClips[index].Pause();
-        }
+        videoClips[index].Pause();
+
         playlistVM.Pause();
     }
 
-    public void PlayVideo(int index = -1)
+    public void StopVideo(int index)
+    {
+        videoPlayer.Stop();
+
+        videoClips[index].Pause();
+
+        playlistVM.Pause();
+    }
+
+    public void PlayVideo(int index)
     {
         if (pausedFrame > 0)
         {
@@ -162,20 +165,13 @@ public class VideoPlayerComponent
 
         videoPlayer.Play();
 
-        if (index == -1)
+        if (currentVideoClipVM != videoClips[index])
         {
-            currentVideoClipVM?.Play();
+            StartVideo(index);
         }
         else
         {
-            if (currentVideoClipVM != videoClips[index])
-            {
-                StartVideo(index);
-            }
-            else
-            {
-                currentVideoClipVM.Play();
-            }
+            currentVideoClipVM.Play();
         }
         playlistVM.Play();
     }

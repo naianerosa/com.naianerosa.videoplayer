@@ -267,7 +267,7 @@ public class VideoPlayerEditorWindow : EditorWindow
         //pausedFrame = player.frame;
         videoPlayerComponent.PauseVideo(currentIndex);
     }
-    private void Stop() => player.Stop();
+    private void Stop() => videoPlayerComponent.StopVideo(currentIndex);
 
     private void Next()
     {
