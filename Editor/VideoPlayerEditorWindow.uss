@@ -1,9 +1,9 @@
 .video-player-root {
     flex-direction: column;
-    background-color: black;
+    background-color: blue;
     padding: 10px;
     color: white;
-    font-size: 14px;
+    font-size: 14px;    
 }
 
 .header-container {
@@ -52,16 +52,51 @@
     visibility: visible;
 }
 
-.playlist {
-    flex-grow: 1;
-    margin-top: 10px;
-}
-
-.controls > Button {
+/* .controls > Button {
   
    width: 50px;
    height: 50px;
    border-radius: 50%;
    padding:15px;
+} */
+
+.button{
+    align-content: center;
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+   padding-top:10px;
 }
 
+.button-small{
+    width:30px;
+    height:30px;
+    padding:0px;
+    padding-top: 6px;
+}
+
+.video-scrollview {
+    /* flex-grow: 1; */
+    margin-top: 10px;
+    height: 100%;
+    padding: 10px;
+}
+
+.video-list-item {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    transition: background-color 0.2s;
+}
+
+.video-list-item:hover {
+    background-color: #333; 
+}
+
+.video-title-label {
+    font-size: 14px;
+    color: white;
+}

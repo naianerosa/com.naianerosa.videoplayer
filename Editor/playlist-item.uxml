@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow_v2.uss?fileID=7433441132597879392&amp;guid=46b9e245ded90c44ba58df3dda419a09&amp;type=3#VideoPlayerEditorWindow_v2" />
+    <ui:VisualElement name="playlist-item" class="playlist-item">
+        <ui:Label name="playlist-item-label" text="My Video 001" class="playlist-item-label" />
+        <ui:Button name="playlist-item-button" text="P" class="button" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -3,16 +3,15 @@
     <ui:VisualElement name="root" class="video-player-root">
         <uie:ObjectField name="playlist-object-field" label="Video Playlist" type="VideoPlaylist, VideoPlayer.Editor" />
         <ui:Label name="current-video-label" text="No video selected" class="title" />
-        <ui:VisualElement name="header" class="header-container">
-            <ui:VisualElement name="video-container" />
+        <ui:VisualElement name="header" class="header-container" >
+            <ui:VisualElement name="video-container"/>
             <ui:VisualElement name="controls" class="controls">
-                <ui:Button name="prev-button" text="P" />
-                <ui:Button name="play-button" text="P" />
-                <ui:Button name="pause-button" text="Pa" style="visibility: visible; display: none;" />
-                <ui:Button name="stop-button" text="S" />
-                <ui:Button name="next-button" text="N" />
+                <ui:Button name="prev-button" text="P"  class="button" />
+                <ui:Button name="play-button" text="P"  class="button"/>
+                <ui:Button name="stop-button" text="S"  class="button"/>
+                <ui:Button name="next-button" text="N"  class="button"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:ScrollView name="playlist-scroll-view" class="playlist" />
+        <ui:ScrollView name="playlist-scroll-view" class="video-scrollview" />
     </ui:VisualElement>
 </ui:UXML>

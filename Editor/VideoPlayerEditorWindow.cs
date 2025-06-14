@@ -22,21 +22,22 @@ public class VideoPlayerEditorWindow : EditorWindow
     private Button play;
     private RenderTexture renderTexture;
     private IMGUIContainer videoDisplay;
-    private ScrollView playlistScrollView;
+    private ScrollView playlistContainer;
     private long pausedFrame = -1;
     private Texture playImage;
+    private TemplateContainer playlistItemTemplate;
 
     public void CreateGUI()
     {
         var root = rootVisualElement;
 
-        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow.uxml");
-        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow.uss");
-        root.styleSheets.Add(styleSheet);
+        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow_v2.uxml");
+        //var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow.uss");
+        //root.styleSheets.Add(styleSheet);
         visualTree.CloneTree(root);
 
         videoContainer = root.Q<VisualElement>("video-container");
-        currentVideoLabel = root.Q<Label>("current-video-label");
+        //currentVideoLabel = root.Q<Label>("current-video-label");
 
         play = root.Q<Button>("play-button");
         //var playButton = root.Q<Button>("play-button");
@@ -47,11 +48,11 @@ public class VideoPlayerEditorWindow : EditorWindow
         {
             image = playImage,
         });
-        
+
 
         play.clicked += PlayPause;
 
-        
+
 
         var stop = root.Q<Button>("stop-button");
         stop.text = ""; // Hide text
@@ -77,11 +78,11 @@ public class VideoPlayerEditorWindow : EditorWindow
         });
 
         prev.clicked += Previous;
-        playlistScrollView = root.Q<ScrollView>("playlist-scroll-view");
+        playlistContainer = root.Q<ScrollView>("playlist");
 
         //videoContainer.
 
-        root.Q<ObjectField>("playlist-object-field").RegisterValueChangedCallback(evt =>
+        root.Q<ObjectField>("playlist_picker").RegisterValueChangedCallback(evt =>
         {
             playlist = evt.newValue as VideoPlaylist;
             currentIndex = 0;
@@ -120,28 +121,41 @@ public class VideoPlayerEditorWindow : EditorWindow
         ////videoContainer. .Add(player.GetComponent<VideoPlayer>().GetComponent<VisualElement>());
 
         // Create IMGUI container to draw the texture
-        videoDisplay = new IMGUIContainer(DrawVideoFrame);
-        videoDisplay.style.height = 300;
-        videoDisplay.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f);
-        //var videoContainer = root.Q<VisualElement>("video-container");
-        videoContainer.Add(videoDisplay);
+        videoDisplay = root.Q<IMGUIContainer>("video-display"); // new IMGUIContainer(DrawVideoFrame);
+        //videoDisplay.style.height = 300;
+        //videoDisplay.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f);
+        ////var videoContainer = root.Q<VisualElement>("video-container");
+        //videoContainer.Add(videoDisplay);
 
         EditorApplication.update += Repaint;
         videoDisplay.onGUIHandler = DrawVideoFrame;
+
+        playlistItemTemplate = root.Q<TemplateContainer>("playlist-item");
     }
 
     private void PopulatePlaylistUI()
-    {
-        playlistScrollView.Clear();
+    {        
+        playlistContainer.Clear();
 
         if (playlist == null || playlist.videoClips == null) return;
 
         for (int i = 0; i < playlist.videoClips.Count; i++)
         {
-            var button = new Button();
-            button.text = playlist.videoClips[i].name;
-            button.userData = i;
+            var item = playlistItemTemplate.templateSource.CloneTree();
+            //var item = new VisualElement();
+            //item.AddToClassList("video-list-item");
+            var label = item.Q<Label>("playlist-item-label");
+            label.text = playlist.videoClips[i].name;
 
+            var button = item.Q<Button>("playlist-item-button");
+            //button.AddToClassList("button");
+            //button.AddToClassList("button-small");
+            button.text = "";
+            button.Add(new Image
+            {
+                image = EditorGUIUtility.IconContent("d_PlayButton").image,
+            });
+            button.userData = i;
             button.clicked += () =>
             {
                 currentIndex = (int)button.userData;
@@ -150,13 +164,16 @@ public class VideoPlayerEditorWindow : EditorWindow
 
             };
 
-            playlistScrollView.Add(button);
+            //item.Add(label);
+            //item.Add(button);
+
+            playlistContainer.Add(item);
         }
     }
 
     private void UpdateListView()
     {
-        var allVideos = playlistScrollView.Query<Button>().ToList();
+        var allVideos = playlistContainer.Query<Button>().ToList();
         foreach (var button in allVideos)
         {
             if (button.userData is int index && index == currentIndex)
@@ -174,33 +191,39 @@ public class VideoPlayerEditorWindow : EditorWindow
     {
         if (renderTexture == null) return;
 
+        //Fit the texture to the container
         var aspect = (float)renderTexture.width / renderTexture.height;
+        Debug.Log($"videoDisplay.contentRect.width:{videoDisplay.contentRect.width}");
         float width = videoDisplay.contentRect.width;
         float height = width / aspect;
-        videoContainer.style.height = height;
+        //videoContainer.style.height = height;
+        //videoContainer.parent.style.height = height;
+        Debug.Log($"videoDisplay.contentRect.width:{videoDisplay.contentRect.width}");
+        Debug.Log($"height:{height}");
 
-        var rect = GUILayoutUtility.GetRect(width, height, GUILayout.ExpandWidth(false));        
+
+        var rect = GUILayoutUtility.GetRect(width, height, GUILayout.ExpandWidth(false));
         GUI.DrawTexture(rect, renderTexture);
     }
-     
+
     private void PlayPause()
     {
-        if(!player.isPlaying || player.isPaused)
+        if (!player.isPlaying || player.isPaused)
         {
-         
-            play.Q<Image>().image = EditorGUIUtility.IconContent("d_PauseButton@2x").image;            
+
+            play.Q<Image>().image = EditorGUIUtility.IconContent("d_PauseButton@2x").image;
             Play();
         }
         else
         {
-            
-            play.Q<Image>().image = EditorGUIUtility.IconContent("d_PlayButton@2x").image;           
+
+            play.Q<Image>().image = EditorGUIUtility.IconContent("d_PlayButton@2x").image;
             Pause();
         }
     }
 
     private void Play()
-    {        
+    {
         if (player.url == null && !string.IsNullOrEmpty(GetCurrentFilePath()))
         {
 
@@ -249,7 +272,7 @@ public class VideoPlayerEditorWindow : EditorWindow
     {
         Stop();
         string path = GetCurrentFilePath();
-        currentVideoLabel.text = path != null ? System.IO.Path.GetFileName(path) : "No video selected";
+        //currentVideoLabel.text = path != null ? System.IO.Path.GetFileName(path) : "No video selected";
         if (path != null)
         {
             player.url = path;
