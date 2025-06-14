@@ -130,13 +130,14 @@ public class VideoPlayerEditorWindow : EditorWindow
 
         EditorApplication.update += Repaint;
         videoDisplay.onGUIHandler = DrawVideoFrame;
-
+       
         root.Q<ObjectField>("playlist_picker").RegisterValueChangedCallback(evt =>
         {
             playlist = evt.newValue as VideoPlaylist;
 
             videoPlayerComponent.Load(playlist, player);
-            videoContainer.dataSource = videoPlayerComponent.PlayListVM;
+            root.Q<VisualElement>("root").dataSource = videoPlayerComponent.PlayListVM;
+            //videoContainer.dataSource = videoPlayerComponent.PlayListVM;
 
             currentIndex = 0;
             videoPlayerComponent.StartVideo(currentIndex);

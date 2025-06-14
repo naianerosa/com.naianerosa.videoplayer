@@ -17,7 +17,9 @@ public class VideoPlaylist : ScriptableObject
             Title = title,
             PlayButtonVisibility = DisplayStyle.Flex,
             PauseButtonVisibility = DisplayStyle.None,
-            CurrentVideoTitle = videoClips.Count > 0 ? videoClips[0].name : "No videos in playlist"
+            CurrentVideoTitle = videoClips.Count > 0 ? videoClips[0].name : "No videos in playlist",
+            NoVideosLabelVisibility = videoClips.Count == 0 ? DisplayStyle.Flex : DisplayStyle.None,
+            VideoContainerVisibility = videoClips.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None
         };
     }
 }
@@ -69,6 +71,9 @@ public class VideoPlayListVM : ScriptableObject
     public DisplayStyle PauseButtonVisibility;
     public string CurrentVideoTitle;
 
+    public DisplayStyle NoVideosLabelVisibility = DisplayStyle.Flex;
+    public DisplayStyle VideoContainerVisibility = DisplayStyle.None;
+
     public void Pause()
     {
         PlayButtonVisibility = DisplayStyle.Flex;
@@ -80,6 +85,7 @@ public class VideoPlayListVM : ScriptableObject
         PlayButtonVisibility = DisplayStyle.None;
         PauseButtonVisibility = DisplayStyle.Flex;
     }
+    
 }
 
 public class VideoPlayerComponent
