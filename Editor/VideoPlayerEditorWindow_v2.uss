@@ -29,8 +29,8 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
-    top: -20%;
-    height: auto; 
+    top: -25%;
+    height: auto;
     visibility: hidden;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .playlist {
-    padding:8px;
+    padding: 8px;
 }
 
 .playlist-item {
@@ -47,16 +47,15 @@
     flex-direction: row;
     height: auto;
     margin-bottom: 10px;
-    background-color:#333;
-    padding:8px;
+    background-color: rgb(51, 51, 51);
+    padding: 8px;
 }
 
 .playlist-item:hover {
-    background-color: #444;
+    background-color: rgb(68, 68, 68);
 }
 
 .playlist-item-label {
     flex-grow: 1;
+    color: rgb(255, 255, 255);
 }
-
-

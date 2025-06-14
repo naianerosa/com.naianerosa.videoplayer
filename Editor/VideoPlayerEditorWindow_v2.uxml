@@ -8,20 +8,29 @@
     </ui:VisualElement>
     <ui:VisualElement name="video-container" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlaylistVM.asset?fileID=11400000&amp;guid=6474e8a643b0b594d92e08bd9ae57ead&amp;type=2#VideoPlaylistVM" class="video-container">
         <ui:IMGUIContainer name="video-display" class="video-display" />
-        <ui:VisualElement name="video-controls" class="video-controls">
-            <ui:Button text="&lt;" name="prev-button" class="button" />
-            <ui:Button text="P" name="play-button" class="button">
-                <Bindings>
-                    <ui:DataBinding property="style.display" data-source-path="PlayButtonVisibility" binding-mode="ToTarget" />
-                </Bindings>
-            </ui:Button>
-            <ui:Button text="PA" name="pause-button" class="button">
-                <Bindings>
-                    <ui:DataBinding property="style.display" data-source-path="PauseButtonVisibility" binding-mode="ToTarget" />
-                </Bindings>
-            </ui:Button>
-            <ui:Button text="S" name="stop-button" class="button" />
-            <ui:Button text="&gt;&#10;" name="next-button" class="button" />
+        <ui:VisualElement name="video-controls" class="video-controls" style="flex-direction: column; align-items: center;">
+            <ui:VisualElement name="video-controls-title" style="flex-grow: 1; align-items: center; margin-bottom: 6px;">
+                <ui:Label text="Label" style="-unity-font-style: bold; font-size: 18px; -unity-text-align: middle-center;">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="CurrentVideoTitle" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+            </ui:VisualElement>
+            <ui:VisualElement name="video-controls-button" style="flex-grow: 1; flex-direction: row;">
+                <ui:Button text="&lt;" name="prev-button" class="button" />
+                <ui:Button text="P" name="play-button" class="button">
+                    <Bindings>
+                        <ui:DataBinding property="style.display" data-source-path="PlayButtonVisibility" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Button>
+                <ui:Button text="PA" name="pause-button" class="button">
+                    <Bindings>
+                        <ui:DataBinding property="style.display" data-source-path="PauseButtonVisibility" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Button>
+                <ui:Button text="S" name="stop-button" class="button" />
+                <ui:Button text="&gt;&#10;" name="next-button" class="button" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:ScrollView name="playlist" class="playlist">
