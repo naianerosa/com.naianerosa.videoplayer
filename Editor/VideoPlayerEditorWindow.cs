@@ -273,16 +273,14 @@ public class VideoPlayerEditorWindow : EditorWindow
     private void Next()
     {
         if (playlist == null || playlist.videoClips.Count == 0) return;
-        currentIndex = (currentIndex + 1) % playlist.videoClips.Count;
-       // UpdateCurrentVideo();
+        currentIndex = (currentIndex + 1) % playlist.videoClips.Count; //Return to 0 if it exceeds the count                                                                      
         videoPlayerComponent.StartVideo(currentIndex);
     }
 
     private void Previous()
     {
         if (playlist == null || playlist.videoClips.Count == 0) return;
-        currentIndex = (currentIndex - 1 + playlist.videoClips.Count) % playlist.videoClips.Count;
-        //UpdateCurrentVideo();
+        currentIndex = (currentIndex - 1 + playlist.videoClips.Count) % playlist.videoClips.Count; //Return to 0 if it exceeds the count        
         videoPlayerComponent.StartVideo(currentIndex);
     }
 

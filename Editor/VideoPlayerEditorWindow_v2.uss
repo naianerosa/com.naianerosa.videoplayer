@@ -20,8 +20,9 @@
 
 .video-display {
     flex-grow: 0;
-    height: 322.5px;
     width: 516px;
+    min-height: 290px;
+    background-color: black;
 }
 
 .video-controls {
@@ -29,7 +30,8 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
-    top: -25%;
+    bottom: 10%;
+    position: absolute;
     height: auto;
     visibility: hidden;
 }
@@ -58,4 +60,17 @@
 .playlist-item-label {
     flex-grow: 1;
     color: rgb(255, 255, 255);
+}
+
+.playlist-label {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 8px;
+    padding-top: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    -unity-font-style: bold;
+    font-size: 16px;
 }

@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <ui:Template name="playlist-item" src="project://database/Packages/com.naianerosa.videoplayer/Editor/playlist-item.uxml?fileID=9197481963319205126&amp;guid=40f7c597b1514d64eb248fdc66f3c1a1&amp;type=3#playlist-item" />
-    <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow_v2.uss?fileID=7433441132597879392&amp;guid=46b9e245ded90c44ba58df3dda419a09&amp;type=3" />
+    <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow_v2.uss?fileID=7433441132597879392&amp;guid=46b9e245ded90c44ba58df3dda419a09&amp;type=3#VideoPlayerEditorWindow_v2" />
     <ui:VisualElement name="root" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlaylistVM.asset?fileID=11400000&amp;guid=6474e8a643b0b594d92e08bd9ae57ead&amp;type=2#VideoPlaylistVM" style="flex-grow: 1;">
         <ui:VisualElement name="header" class="header">
             <ui:VisualElement name="playlist_picker_container" class="playlist-picker-container">
@@ -41,6 +41,11 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
+            <ui:Label text="Label" name="playlist-label" class="playlist-label" style="-unity-text-align: upper-center;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="Title" binding-mode="ToTarget" />
+                </Bindings>
+            </ui:Label>
             <ui:ScrollView name="playlist" class="playlist">
                 <ui:Instance template="playlist-item" name="playlist-item" />
                 <ui:Instance template="playlist-item" name="playlist-item" />
