@@ -16,5 +16,5 @@ MonoBehaviour:
   PlayButtonVisibility: 0
   PauseButtonVisibility: 1
   CurrentVideoTitle: Current Video Title
-  NoVideosLabelVisibility: 0
-  VideoContainerVisibility: 1
+  NoVideosLabelVisibility: 1
+  VideoContainerVisibility: 0
