@@ -49,6 +49,7 @@ public class VideoClipVM : ScriptableObject
     public DisplayStyle PlayButtonVisibility;
     public DisplayStyle PauseButtonVisibility;
     public string FilePath;
+    public FontStyle TitleFontStyle = FontStyle.Normal;
 
     public void Pause()
     {
@@ -60,6 +61,13 @@ public class VideoClipVM : ScriptableObject
     {
         PlayButtonVisibility = DisplayStyle.None;
         PauseButtonVisibility = DisplayStyle.Flex;
+        TitleFontStyle = FontStyle.Bold;
+    }
+
+    public void ResetClipState()
+    {
+        Pause();
+        TitleFontStyle = FontStyle.Normal;
     }
 }
 
@@ -85,7 +93,7 @@ public class VideoPlayListVM : ScriptableObject
         PlayButtonVisibility = DisplayStyle.None;
         PauseButtonVisibility = DisplayStyle.Flex;
     }
-    
+
 }
 
 public class VideoPlayerComponent
@@ -127,7 +135,7 @@ public class VideoPlayerComponent
 
         foreach (var item in videoClips)
         {
-            item.Pause();
+            item.ResetClipState();
         }
 
         currentVideoClipVM = videoClips[index];

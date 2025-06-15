@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: VideoClipVM
   m_EditorClassIdentifier: VideoPlayer.Editor::VideoClipVM
-  Title: Video Clip 001
+  Title: Some Title
   PlayButtonVisibility: 0
-  PauseButtonVisibility: 0
-  FilePath: 
+  PauseButtonVisibility: 1
+  FilePath: some/path.webm
+  TitleFontStyle: 0

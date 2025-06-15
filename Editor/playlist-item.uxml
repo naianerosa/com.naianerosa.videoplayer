@@ -4,6 +4,7 @@
         <ui:Label name="playlist-item-label" text="My Video 001" class="playlist-item-label">
             <Bindings>
                 <ui:DataBinding property="text" data-source-path="Title" binding-mode="ToTarget" />
+                <ui:DataBinding property="style.unityFontStyleAndWeight" data-source-path="TitleFontStyle" binding-mode="ToTarget" />
             </Bindings>
         </ui:Label>
         <ui:Button name="playlist-item-button-play" text="P" class="button">

@@ -213,13 +213,13 @@ public class VideoPlayerEditorWindow : EditorWindow
 
         //Fit the texture to the container
         var aspect = (float)renderTexture.width / renderTexture.height;
-        Debug.Log($"videoDisplay.contentRect.width:{videoDisplay.contentRect.width}");
+        //Debug.Log($"videoDisplay.contentRect.width:{videoDisplay.contentRect.width}");
         float width = videoDisplay.contentRect.width;
         float height = width / aspect;
         //videoContainer.style.height = height;
         //videoContainer.parent.style.height = height;
-        Debug.Log($"videoDisplay.contentRect.width:{videoDisplay.contentRect.width}");
-        Debug.Log($"height:{height}");
+        //Debug.Log($"videoDisplay.contentRect.width:{videoDisplay.contentRect.width}");
+        //Debug.Log($"height:{height}");
 
 
         var rect = GUILayoutUtility.GetRect(width, height, GUILayout.ExpandWidth(false));
