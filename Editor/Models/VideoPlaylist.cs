@@ -11,14 +11,15 @@ public class VideoPlaylist : ScriptableObject
 
     public VideoPlayListVM GetVM()
     {
-        return new VideoPlayListVM
-        {
-            Title = title,
-            PlayButtonVisibility = DisplayStyle.Flex,
-            PauseButtonVisibility = DisplayStyle.None,
-            CurrentVideoTitle = videoClips.Count > 0 ? videoClips[0].name : "No videos in playlist",
-            NoVideosLabelVisibility = videoClips.Count == 0 ? DisplayStyle.Flex : DisplayStyle.None,
-            VideoContainerVisibility = videoClips.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None
-        };
+        var viewModel = ScriptableObject.CreateInstance<VideoPlayListVM>();
+
+        viewModel.Title = title;
+        viewModel.PlayButtonVisibility = DisplayStyle.Flex;
+        viewModel.PauseButtonVisibility = DisplayStyle.None;
+        viewModel.CurrentVideoTitle = videoClips.Count > 0 ? videoClips[0].name : "No videos available in this playlist";
+        viewModel.NoVideosLabelVisibility = videoClips.Count == 0 ? DisplayStyle.Flex : DisplayStyle.None;
+        viewModel.VideoContainerVisibility = videoClips.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
+
+        return viewModel;
     }
 }

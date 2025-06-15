@@ -1,17 +1,58 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="playlist-item" src="project://database/Packages/com.naianerosa.videoplayer/Editor/playlist-item.uxml?fileID=9197481963319205126&amp;guid=40f7c597b1514d64eb248fdc66f3c1a1&amp;type=3#playlist-item" />
     <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow.uss?fileID=7433441132597879392&amp;guid=0d19bbabcac07074a869e0e4e7e37784&amp;type=3#VideoPlayerEditorWindow" />
-    <ui:VisualElement name="root" class="video-player-root">
-        <uie:ObjectField name="playlist-object-field" label="Video Playlist" type="VideoPlaylist, VideoPlayer.Editor" />
-        <ui:Label name="current-video-label" text="No video selected" class="title" />
-        <ui:VisualElement name="header" class="header-container" >
-            <ui:VisualElement name="video-container"/>
-            <ui:VisualElement name="controls" class="controls">
-                <ui:Button name="prev-button" text="P"  class="button" />
-                <ui:Button name="play-button" text="P"  class="button"/>
-                <ui:Button name="stop-button" text="S"  class="button"/>
-                <ui:Button name="next-button" text="N"  class="button"/>
+    <ui:VisualElement name="root" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlaylistVM.asset?fileID=11400000&amp;guid=6474e8a643b0b594d92e08bd9ae57ead&amp;type=2#VideoPlaylistVM" style="flex-grow: 1;">
+        <ui:VisualElement name="header" class="header">
+            <ui:VisualElement name="playlist_picker_container" class="playlist-picker-container">
+                <uie:ObjectField name="playlist_picker" label="Video Playlist" type="VideoPlaylist, VideoPlayer.Editor" style="flex-grow: 1;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:ScrollView name="playlist-scroll-view" class="video-scrollview" />
+        <ui:VisualElement name="no-video-container" style="flex-grow: 1; align-items: flex-start;">
+            <ui:Label text="No videos to display" style="-unity-font-style: bold; font-size: 18px;" />
+            <Bindings>
+                <ui:DataBinding property="style.display" data-source-path="NoVideosLabelVisibility" binding-mode="ToTarget" />
+            </Bindings>
+        </ui:VisualElement>
+        <ui:VisualElement name="videos-elements" style="flex-grow: 1;">
+            <ui:VisualElement name="video-container" class="video-container">
+                <ui:IMGUIContainer name="video-display" class="video-display" />
+                <ui:VisualElement name="video-controls" class="video-controls" style="flex-direction: column; align-items: center;">
+                    <ui:VisualElement name="video-controls-title" style="flex-grow: 1; align-items: center; margin-bottom: 6px;">
+                        <ui:Label text="Label" style="-unity-font-style: bold; font-size: 18px; -unity-text-align: middle-center;">
+                            <Bindings>
+                                <ui:DataBinding property="text" data-source-path="CurrentVideoTitle" binding-mode="ToTarget" />
+                            </Bindings>
+                        </ui:Label>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="video-controls-button" style="flex-grow: 1; flex-direction: row;">
+                        <ui:Button text="&lt;" name="prev-button" class="button" />
+                        <ui:Button text="P" name="play-button" class="button">
+                            <Bindings>
+                                <ui:DataBinding property="style.display" data-source-path="PlayButtonVisibility" binding-mode="ToTarget" />
+                            </Bindings>
+                        </ui:Button>
+                        <ui:Button text="PA" name="pause-button" class="button">
+                            <Bindings>
+                                <ui:DataBinding property="style.display" data-source-path="PauseButtonVisibility" binding-mode="ToTarget" />
+                            </Bindings>
+                        </ui:Button>
+                        <ui:Button text="S" name="stop-button" class="button" />
+                        <ui:Button text="&gt;&#10;" name="next-button" class="button" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Label text="Label" name="playlist-label" class="playlist-label" style="-unity-text-align: upper-center;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="Title" binding-mode="ToTarget" />
+                </Bindings>
+            </ui:Label>
+            <ui:ScrollView name="playlist" class="playlist">
+                <ui:Instance template="playlist-item" name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoClipVM.asset?fileID=11400000&amp;guid=ed9c55c6da653b242a60369d6ba94f64&amp;type=2#VideoClipVM" />
+                <ui:Instance template="playlist-item" name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoClipVM.asset?fileID=11400000&amp;guid=ed9c55c6da653b242a60369d6ba94f64&amp;type=2#VideoClipVM" />
+            </ui:ScrollView>
+            <Bindings>
+                <ui:DataBinding property="style.display" data-source-path="VideoContainerVisibility" binding-mode="ToTarget" />
+            </Bindings>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

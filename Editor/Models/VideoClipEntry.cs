@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UIElements;
 
 [System.Serializable]
@@ -6,15 +7,14 @@ public class VideoClipEntry
     public string name;
     public string filePath; // Absolute or relative path to the .webm file
 
-    public VideoClipVM GetVM(int clipIndex)
+    public VideoClipVM GetVM()
     {
-        return new VideoClipVM
-        {
-            Index = clipIndex,
-            Title = name,
-            PlayButtonVisibility = DisplayStyle.Flex,
-            PauseButtonVisibility = DisplayStyle.None,
-            FilePath = filePath
-        };
+        var viewModel = ScriptableObject.CreateInstance<VideoClipVM>();
+
+        viewModel.Title = name;
+        viewModel.PlayButtonVisibility = DisplayStyle.Flex;
+        viewModel.PauseButtonVisibility = DisplayStyle.None;
+        viewModel.FilePath = filePath;
+        return viewModel;
     }
 }

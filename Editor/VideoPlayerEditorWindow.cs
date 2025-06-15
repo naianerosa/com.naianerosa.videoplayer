@@ -1,31 +1,27 @@
-using Codice.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.Video;
 
 public class VideoPlayerEditorWindow : EditorWindow
 {
+    [SerializeField]
+    private VisualTreeAsset m_VisualTreeAsset = default;
+    private EditorVideoPlayerHandler videoPlayerComponent;
+    private PlayListComponent playListComponent;
+
     [MenuItem("Window/Video Player")]
-    public static void NewInstance()
+    public static void NewWindow()
     {
         VideoPlayerEditorWindow wnd = GetWindow<VideoPlayerEditorWindow>();
         wnd.titleContent = new GUIContent("Video Player");
     }
 
-    private EditorVideoPlayerHandler videoPlayerComponent;
-    private PlayListComponent playListComponent;
-
     public void CreateGUI()
     {
-        var root = rootVisualElement;
+        VisualElement root = rootVisualElement;
+        root.Add(m_VisualTreeAsset.Instantiate());
 
-        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow_v2.uxml");
-        visualTree.CloneTree(root);
 
         var videoDisplay = root.Q<IMGUIContainer>("video-display");
 
@@ -45,6 +41,7 @@ public class VideoPlayerEditorWindow : EditorWindow
         //Improve Video frame rate in the editor
         EditorApplication.update += Repaint;
     }
+
 
     private void OnDisable()
     {

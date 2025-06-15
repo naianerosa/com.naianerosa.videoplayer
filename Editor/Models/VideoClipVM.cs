@@ -4,8 +4,7 @@ using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/VideoClipVM")]
 public class VideoClipVM : ScriptableObject
-{
-    public int Index;
+{    
     public string Title;
     public DisplayStyle PlayButtonVisibility;
     public DisplayStyle PauseButtonVisibility;

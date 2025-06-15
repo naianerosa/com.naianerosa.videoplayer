@@ -78,7 +78,7 @@ public class PlayListComponent
 
         for (int i = 0; i < playlist.videoClips.Count; i++)
         {
-            var videoViewModel = playlist.videoClips[i].GetVM(i);
+            var videoViewModel = playlist.videoClips[i].GetVM();
 
             var itemRoot = playlistItemTemplate.templateSource.CloneTree();
 
