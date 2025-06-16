@@ -1,8 +1,12 @@
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.Video;
 
 public class VideoPlayerEditorWindowTests
 {
@@ -76,7 +80,7 @@ public class VideoPlayerEditorWindowTests
         Assert.That(rootElement.dataSource, Is.Not.Null);
         Assert.AreEqual(((VideoPlayListVM)(rootElement.dataSource)).name, mockPlaylist2.GetVM().name);
 
-        Object.DestroyImmediate(mockPlaylist1);
-        Object.DestroyImmediate(mockPlaylist2);
+        UnityEngine.Object.DestroyImmediate(mockPlaylist1);
+        UnityEngine.Object.DestroyImmediate(mockPlaylist2);
     }
 }

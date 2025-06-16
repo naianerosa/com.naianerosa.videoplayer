@@ -9,12 +9,13 @@ public class EditorVideoPlayerHandler
     private IMGUIContainer videoDisplay;
     private RenderTexture renderTexture;
     private long pausedFrame = -1;
+    public const string VideoPlayerName = "EditorVideoPlayer";
 
     public EditorVideoPlayerHandler(IMGUIContainer videoDisplay)
     {
         this.videoDisplay = videoDisplay;
         renderTexture = new RenderTexture(512, 288, 0); // 16:9 aspect ratio
-        var go = new GameObject($"EditorVideoPlayer", typeof(VideoPlayer));       
+        var go = new GameObject(VideoPlayerName, typeof(VideoPlayer));       
         go.hideFlags = HideFlags.HideAndDontSave;
         videoPlayer = go.GetComponent<VideoPlayer>();
         videoPlayer.playOnAwake = false;
@@ -22,7 +23,7 @@ public class EditorVideoPlayerHandler
         videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
         videoPlayer.SetTargetAudioSource(0, audioSource);
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
-        videoPlayer.targetTexture = renderTexture;
+        videoPlayer.targetTexture = renderTexture;       
     }
 
     public void DrawVideoFrame()
@@ -66,6 +67,8 @@ public class EditorVideoPlayerHandler
 
         if (pausedFrame > 0)
         {
+            //For some reason the video player resumes from the wrong frame when rendered on the IMGUIContainer.
+            //Forcing the frame fixed this issue.
             videoPlayer.frame = pausedFrame;
             pausedFrame = -1;
         }
