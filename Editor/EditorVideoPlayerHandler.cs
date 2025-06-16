@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Video;
@@ -13,7 +14,7 @@ public class EditorVideoPlayerHandler
     {
         this.videoDisplay = videoDisplay;
         renderTexture = new RenderTexture(512, 288, 0); // 16:9 aspect ratio
-        var go = new GameObject("EditorVideoPlayer", typeof(VideoPlayer));
+        var go = new GameObject($"EditorVideoPlayer", typeof(VideoPlayer));       
         go.hideFlags = HideFlags.HideAndDontSave;
         videoPlayer = go.GetComponent<VideoPlayer>();
         videoPlayer.playOnAwake = false;
