@@ -79,44 +79,40 @@ public partial class EditorVideoPlayerElement : VisualElement
 
     public void LoadPlayList(VideoPlaylist videoPlaylist)
     {
-        if (videoPlaylist == null)
-        {
-            Debug.LogError("VideoPlaylist is null, cannot load playlist.");
-            return;
-        }
-
         this.dataSource = ScriptableObject.CreateInstance<EditorVideoPlayerElementVM>();
-        viewModel.Init(videoPlaylist);
-
-        if (this.playlistItemTemplate == null)
-        {
-            Debug.LogError("Playlist item template is null, cannot load playlist.");
-            return;
-        }
-
         this.playListVideosContainer.Clear();
 
-        for (int i = 0; i < viewModel.Videos.Count; i++)
+        if (videoPlaylist != null)
         {
-            var videoViewModel = viewModel.Videos[i];
+            viewModel.Init(videoPlaylist);
 
-            var itemRoot = playlistItemTemplate.templateSource.CloneTree();
-            var playListItemElement = itemRoot.Q<PlayListItemElement>();
-            playListItemElement.Init(videoViewModel, i);
-            playListItemElement.PlayClicked += (sender, itemIndex) =>
+            if (this.playlistItemTemplate == null)
             {
-                currentIndex = itemIndex;
-                Play();
-            };
+                Debug.LogError("Playlist item template is null, cannot load playlist.");
+                return;
+            }
 
-            playListItemElement.PauseClicked += (sender, itemIndex) =>
+            for (int i = 0; i < viewModel.Videos.Count; i++)
             {
-                Pause();
-            };
+                var videoViewModel = viewModel.Videos[i];
 
-            playListVideosContainer.Add(itemRoot);
+                var itemRoot = playlistItemTemplate.templateSource.CloneTree();
+                var playListItemElement = itemRoot.Q<PlayListItemElement>();
+                playListItemElement.Init(videoViewModel, i);
+                playListItemElement.PlayClicked += (sender, itemIndex) =>
+                {
+                    currentIndex = itemIndex;
+                    Play();
+                };
+
+                playListItemElement.PauseClicked += (sender, itemIndex) =>
+                {
+                    Pause();
+                };
+
+                playListVideosContainer.Add(itemRoot);
+            }
         }
-
         currentIndex = 0;
         Play();
     }
@@ -153,15 +149,21 @@ public partial class EditorVideoPlayerElement : VisualElement
 
     public void Play()
     {
-        if (viewModel.Videos == null || viewModel.Videos.Count == 0) return;
+        if (viewModel.Videos == null || viewModel.Videos.Count == 0)
+        {
+            PlayClicked?.Invoke(this, "");
+        }
+        else
+        {
+            viewModel.Videos.ForEach(a => a.ResetClipState());
 
-        viewModel.Videos.ForEach(a => a.ResetClipState());
+            var videoToPlay = viewModel.Videos[currentIndex];
+            videoToPlay.Play();
+            viewModel.CurrentVideoTitle = videoToPlay.Title;
+            viewModel.Play();
+            PlayClicked?.Invoke(this, videoToPlay.FilePath);
+        }
 
-        var videoToPlay = viewModel.Videos[currentIndex];
-        videoToPlay.Play();
-        viewModel.CurrentVideoTitle = videoToPlay.Title;
-        viewModel.Play();
-        PlayClicked?.Invoke(this, videoToPlay.FilePath);
     }
 
 

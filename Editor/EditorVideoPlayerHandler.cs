@@ -61,7 +61,14 @@ public class EditorVideoPlayerHandler
 
     public void PlayVideo(string filePath = "")
     {
-        if (filePath != "" && videoPlayer.url != filePath)
+        if(filePath == "")
+        {
+            videoPlayer.Stop();
+            videoPlayer.url = "";
+            return;
+        }
+
+        if (videoPlayer.url != filePath)
         {
             LoadNewVideo(filePath);
         }

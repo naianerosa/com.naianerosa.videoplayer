@@ -31,7 +31,7 @@ public class VideoPlayerEditorWindow : EditorWindow
 
         editorVideoPlayerElement.videoDisplay.onGUIHandler = videoPlayerHandler.DrawVideoFrame;
 
-        root.Q<ObjectField>("playlist_picker").RegisterValueChangedCallback(evt =>
+        root.Q<ObjectField>("playlist_picker").RegisterCallback<ChangeEvent<Object>>((evt) =>
         {
             editorVideoPlayerElement.LoadPlayList(evt.newValue as VideoPlaylist);
         });
