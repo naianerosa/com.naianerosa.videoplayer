@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine.UIElements;
 
+[assembly: InternalsVisibleTo("VideoPlayer.Editor.Tests")]
 public class PlayListComponent
 {
     private VisualElement playlistContainer;
-    private EditorVideoPlayerHandler videoPlayerComponent;
+    private IEditorVideoPlayerHandler videoPlayerComponent;
     private List<VideoClipVM> videos = new List<VideoClipVM>();
     private int currentIndex = 0;
     private TemplateContainer playlistItemTemplate;
@@ -13,7 +15,7 @@ public class PlayListComponent
 
     public PlayListComponent(
         VisualElement root,
-        EditorVideoPlayerHandler videoPlayerComponent)
+        IEditorVideoPlayerHandler videoPlayerComponent)
     {
 
         this.videoPlayerComponent = videoPlayerComponent;
@@ -163,4 +165,13 @@ public class PlayListComponent
         videoPlayerComponent.PlayVideo(videoToPlay.FilePath);
     }
 
+    internal List<VideoClipVM> GetCurrentVideosViewModel()
+    {
+        return videos;
+    }
+
+    internal VideoPlayListVM GetPlayListViewModel()
+    {
+        return viewModel;
+    }
 }
