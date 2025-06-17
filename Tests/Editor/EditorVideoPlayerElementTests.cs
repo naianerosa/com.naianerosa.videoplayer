@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.Video;
 
 public class EditorVideoPlayerElementTests
 {
     private EditorVideoPlayerElement videoPlayerElement;
-    //private IEditorVideoPlayerHandler videoPlayer;
-    private VideoPlaylist mockPlayList;
+    private VideoPlaylist playlist1;
+    private VideoPlaylist playlist2;
 
     [SetUp]
     public void Setup()
@@ -23,34 +24,24 @@ public class EditorVideoPlayerElementTests
         videoPlayerElement = root.Q<EditorVideoPlayerElement>();
         videoPlayerElement.Init();
 
-        // Setup mock video player
-        //videoPlayer = new MockVideoPlayerHandler();
-
-        // Create mock playlist
-        mockPlayList = ScriptableObject.CreateInstance<VideoPlaylist>();
-        mockPlayList.Videos = new List<VideoClipEntry>
-        {
-            new VideoClipEntry { Name = "Test Video 1", FilePath = "path/to/video1.mp4" },
-            new VideoClipEntry { Name = "Test Video 2", FilePath = "path/to/video2.mp4" },
-            new VideoClipEntry { Name = "Test Video 3", FilePath = "path/to/video3.mp4" }
-        };
+        // Load mock playlists
+        playlist1 = AssetDatabase.LoadAssetAtPath<VideoPlaylist>("Packages/com.naianerosa.videoplayer/Tests/Resources/MockPlaylist1.asset");
+        playlist2 = AssetDatabase.LoadAssetAtPath<VideoPlaylist>("Packages/com.naianerosa.videoplayer/Tests/Resources/MockPlaylist2.asset");
     }
 
     [TearDown]
     public void TearDown()
     {
-        Object.DestroyImmediate(mockPlayList);
-        //videoPlayer.Destroy();
     }
 
     [Test]
     public void LoadPlaylist_HasCorrectNumberOfVideosAndState()
     {
-        videoPlayerElement.LoadPlayList(mockPlayList);
+        videoPlayerElement.LoadPlayList(playlist1);
 
         //Check items and buttons states
         Assert.IsNotNull(videoPlayerElement.viewModel);
-        Assert.That(videoPlayerElement.viewModel.Videos.Count, Is.EqualTo(mockPlayList.Videos.Count));
+        Assert.That(videoPlayerElement.viewModel.Videos.Count, Is.EqualTo(playlist1.Videos.Length));
         AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: 0);
 
         //Check containers visibility
@@ -58,24 +49,18 @@ public class EditorVideoPlayerElementTests
         Assert.AreEqual(DisplayStyle.None, videoPlayerElement.viewModel.NoVideosLabelVisibility, "No videos label should NOT be visible");
 
         //Change Playlist
-        var newPlayList = ScriptableObject.CreateInstance<VideoPlaylist>();
-        newPlayList.Videos = new List<VideoClipEntry>
-        {
-            new VideoClipEntry { Name = "New Test Video 1", FilePath = "path/to/video1.mp4" }
-        };
-
-        videoPlayerElement.LoadPlayList(newPlayList);
+       
+        videoPlayerElement.LoadPlayList(playlist2);
 
         //Check items and buttons states
         Assert.IsNotNull(videoPlayerElement.viewModel);
-        Assert.That(videoPlayerElement.viewModel.Videos.Count, Is.EqualTo(newPlayList.Videos.Count));
+        Assert.That(videoPlayerElement.viewModel.Videos.Count, Is.EqualTo(playlist2.Videos.Length));
         AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: 0);
 
         //Check containers visibility
         Assert.AreEqual(DisplayStyle.Flex, videoPlayerElement.viewModel.VideoContainerVisibility, "Videos container should be visible");
         Assert.AreEqual(DisplayStyle.None, videoPlayerElement.viewModel.NoVideosLabelVisibility, "No videos label should NOT be visible");
 
-        Object.DestroyImmediate(newPlayList);
     }
 
     [Test]
@@ -106,7 +91,7 @@ public class EditorVideoPlayerElementTests
     [Test]
     public void Play_ButtonsAreOnCorrectState()
     {
-        videoPlayerElement.LoadPlayList(mockPlayList);
+        videoPlayerElement.LoadPlayList(playlist1);
         videoPlayerElement.Pause();
         videoPlayerElement.Play();
         AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: 0);
@@ -115,17 +100,17 @@ public class EditorVideoPlayerElementTests
     [Test]
     public void Next_ButtonsAreOnCorrectState()
     {
-        videoPlayerElement.LoadPlayList(mockPlayList);
+        videoPlayerElement.LoadPlayList(playlist1);
         videoPlayerElement.Next();
 
-        AssertButtonStates( mainButtonPlaying: true, indexOfPlayingVideo: 1);
+        AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: 1);
     }
 
     [Test]
     public void Next_MoreTimesThanVideos_GoesBackToFirst()
     {
-        videoPlayerElement.LoadPlayList(mockPlayList);
-        for (int i = 1; i < mockPlayList.Videos.Count; i++)
+        videoPlayerElement.LoadPlayList(playlist1);
+        for (int i = 1; i < playlist1.Videos.Length; i++)
         {
             videoPlayerElement.Next();
         }
@@ -137,7 +122,7 @@ public class EditorVideoPlayerElementTests
     [Test]
     public void Previous_ButtonsAreOnCorrectState()
     {
-        videoPlayerElement.LoadPlayList(mockPlayList);
+        videoPlayerElement.LoadPlayList(playlist1);
         videoPlayerElement.Next(); // Move to second video
         videoPlayerElement.Previous(); // Move back to first
 
@@ -147,16 +132,16 @@ public class EditorVideoPlayerElementTests
     [Test]
     public void Previous_OnFirstVideo_GoesBackToLast()
     {
-        videoPlayerElement.LoadPlayList(mockPlayList);
+        videoPlayerElement.LoadPlayList(playlist1);
         videoPlayerElement.Previous(); // Move to last video
 
-        AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: mockPlayList.Videos.Count - 1);
+        AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: playlist1.Videos.Length - 1);
     }
 
     [Test]
     public void Stop_ButtonsAreOnCorrectState()
     {
-        videoPlayerElement.LoadPlayList(mockPlayList);
+        videoPlayerElement.LoadPlayList(playlist1);
         videoPlayerElement.Stop();
 
         AssertButtonStates(mainButtonPlaying: false, indexOfPlayingVideo: -1);
@@ -165,7 +150,7 @@ public class EditorVideoPlayerElementTests
     [Test]
     public void Pause_ButtonsAreOnCorrectState()
     {
-        videoPlayerElement.LoadPlayList(mockPlayList);
+        videoPlayerElement.LoadPlayList(playlist1);
         videoPlayerElement.Pause();
 
         AssertButtonStates(mainButtonPlaying: false, indexOfPlayingVideo: -1);
