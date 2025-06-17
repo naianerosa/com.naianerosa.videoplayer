@@ -60,25 +60,25 @@ public class VideoPlayerEditorWindowTests
     {
         var root = window.rootVisualElement;
         var playlistPicker = root.Q<ObjectField>("playlist_picker");
-        var rootElement = root.Q<VisualElement>("root");
+        var videoPlayerElement = root.Q<EditorVideoPlayerElement>();
 
         //Sets the first playlist to the picker
         var mockPlaylist1 = ScriptableObject.CreateInstance<VideoPlaylist>();
-        mockPlaylist1.title = "Mock Playlist 1";
+        mockPlaylist1.Title = "Mock Playlist 1";
         playlistPicker.value = mockPlaylist1;
 
         // Verify root element has data source set and title matches
-        Assert.That(rootElement.dataSource, Is.Not.Null);
-        Assert.AreEqual(((VideoPlayerEditorWindowVM)(rootElement.dataSource)).name, mockPlaylist1.GetVM().name);
+        Assert.That(window.editorVideoPlayerElement.dataSource, Is.Not.Null);
+        Assert.AreEqual(mockPlaylist1.Title, ((EditorVideoPlayerElementVM)(videoPlayerElement.dataSource)).Title);
 
         //Sets the second playlist to the picker
         var mockPlaylist2 = ScriptableObject.CreateInstance<VideoPlaylist>();
-        mockPlaylist2.title = "Mock Playlist 2";
+        mockPlaylist2.Title = "Mock Playlist 2";
         playlistPicker.value = mockPlaylist2;
 
         // Verify root element has data source set and title matches    
-        Assert.That(rootElement.dataSource, Is.Not.Null);
-        Assert.AreEqual(((VideoPlayerEditorWindowVM)(rootElement.dataSource)).name, mockPlaylist2.GetVM().name);
+        Assert.That(window.editorVideoPlayerElement.dataSource, Is.Not.Null);
+        Assert.AreEqual(mockPlaylist2.Title, ((EditorVideoPlayerElementVM)(videoPlayerElement.dataSource)).Title);
 
         UnityEngine.Object.DestroyImmediate(mockPlaylist1);
         UnityEngine.Object.DestroyImmediate(mockPlaylist2);

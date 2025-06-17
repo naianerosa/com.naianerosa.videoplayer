@@ -3,17 +3,8 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Video;
 
-public interface IEditorVideoPlayerHandler
-{
-    void Destroy();
-    void DrawVideoFrame();
-    void LoadNewVideo(string videoPath);
-    void Pause();
-    void PlayVideo(string filePath = "");
-    void StopVideo();
-}
 
-public class EditorVideoPlayerHandler : IEditorVideoPlayerHandler
+public class EditorVideoPlayerHandler
 {
     private VideoPlayer videoPlayer;
     private IMGUIContainer videoDisplay;

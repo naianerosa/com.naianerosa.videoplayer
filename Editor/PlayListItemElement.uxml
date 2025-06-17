@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow_v2.uss?fileID=7433441132597879392&amp;guid=46b9e245ded90c44ba58df3dda419a09&amp;type=3" />
-    <ui:VisualElement name="playlist-item" class="playlist-item">
+    <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow.uss?fileID=7433441132597879392&amp;guid=0d19bbabcac07074a869e0e4e7e37784&amp;type=3#VideoPlayerEditorWindow" />
+    <PlayListItemElement name="playlist-item" class="playlist-item">
         <ui:Label name="playlist-item-label" text="My Video 001" class="playlist-item-label">
             <Bindings>
                 <ui:DataBinding property="text" data-source-path="Title" binding-mode="ToTarget" />
@@ -17,5 +17,5 @@
                 <ui:DataBinding property="style.display" data-source-path="PauseButtonVisibility" binding-mode="ToTarget" />
             </Bindings>
         </ui:Button>
-    </ui:VisualElement>
+    </PlayListItemElement>
 </ui:UXML>

@@ -7,8 +7,10 @@ public class VideoPlayerEditorWindow : EditorWindow
 {
     [SerializeField]
     private VisualTreeAsset m_VisualTreeAsset = default;
-    private EditorVideoPlayerHandler videoPlayerComponent;
-    private PlayListComponent playListComponent;
+    private EditorVideoPlayerHandler videoPlayerHandler;
+    public EditorVideoPlayerElement editorVideoPlayerElement;
+
+    //private PlayListComponent playListComponent;
 
     [MenuItem("Window/Video Player")]
     public static void NewWindow()
@@ -22,35 +24,46 @@ public class VideoPlayerEditorWindow : EditorWindow
         VisualElement root = rootVisualElement;
         root.Add(m_VisualTreeAsset.Instantiate());
 
+        this.editorVideoPlayerElement = root.Q<EditorVideoPlayerElement>();
+        editorVideoPlayerElement.Init();
 
-        var videoDisplay = root.Q<IMGUIContainer>("video-display");
+        videoPlayerHandler = new EditorVideoPlayerHandler(editorVideoPlayerElement.videoDisplay);
 
-        videoPlayerComponent = new EditorVideoPlayerHandler(videoDisplay);
-
-        videoDisplay.onGUIHandler = videoPlayerComponent.DrawVideoFrame;
-
-        playListComponent = new PlayListComponent(root, videoPlayerComponent);
+        editorVideoPlayerElement.videoDisplay.onGUIHandler = videoPlayerHandler.DrawVideoFrame;
 
         root.Q<ObjectField>("playlist_picker").RegisterValueChangedCallback(evt =>
         {
-            SetPlaylist(evt.newValue as VideoPlaylist);
+            editorVideoPlayerElement.LoadPlayList(evt.newValue as VideoPlaylist);
         });
 
-        SetPlaylist(ScriptableObject.CreateInstance<VideoPlaylist>()); // Load an empty playlist initially
+        editorVideoPlayerElement.PlayClicked += EditorVideoPlayerElement_PlayClicked;
+        editorVideoPlayerElement.PauseClicked += EditorVideoPlayerElement_PauseClicked;
+        editorVideoPlayerElement.StopClicked += EditorVideoPlayerElement_StopClicked;
 
         //Improve Video frame rate in the editor
         EditorApplication.update += Repaint;
     }
 
-    private void SetPlaylist(VideoPlaylist playlist)
+    private void EditorVideoPlayerElement_PlayClicked(object sender, string filePath)
     {
-        var playlistVM = playListComponent.LoadPlaylist(playlist);
-        rootVisualElement.Q<VisualElement>("root").dataSource = playlistVM;
+        videoPlayerHandler.PlayVideo(filePath);
     }
 
+    private void EditorVideoPlayerElement_PauseClicked(object sender)
+    {
+        videoPlayerHandler.Pause();
+    }
+
+    private void EditorVideoPlayerElement_StopClicked(object sender)
+    {
+        videoPlayerHandler.StopVideo();
+    }
 
     private void OnDisable()
     {
-        videoPlayerComponent.Destroy();
+        editorVideoPlayerElement.PlayClicked -= EditorVideoPlayerElement_PlayClicked;
+        editorVideoPlayerElement.PauseClicked -= EditorVideoPlayerElement_PauseClicked;
+        editorVideoPlayerElement.StopClicked -= EditorVideoPlayerElement_StopClicked;
+        videoPlayerHandler.Destroy();
     }
 }

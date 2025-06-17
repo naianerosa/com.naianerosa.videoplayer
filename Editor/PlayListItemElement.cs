@@ -1,0 +1,49 @@
+﻿using UnityEditor;
+using UnityEngine.UIElements;
+
+[UxmlElement]
+public partial class PlayListItemElement : VisualElement
+{
+    public delegate void ItemButtonClickHandler(object sender, int itemIndex);
+
+    public event ItemButtonClickHandler PlayClicked;
+
+    public event ItemButtonClickHandler PauseClicked;
+
+    private int index;
+
+    private Button playButton => this.Q<Button>("playlist-item-button-play");
+    private Button pauseButton => this.Q<Button>("playlist-item-button-pause");
+
+    public void Init(PlayListItemElementVM viewModel, int index)
+    {
+        this.dataSource = viewModel;
+        this.index = index;
+
+        playButton.text = "";
+        playButton.Add(new Image
+        {
+            image = EditorGUIUtility.IconContent("d_PlayButton").image,
+        });
+        playButton.clicked += () =>
+        {
+            PlayClicked?.Invoke(this, index);
+        };
+
+        pauseButton.text = "";
+        pauseButton.Add(new Image
+        {
+            image = EditorGUIUtility.IconContent("d_PauseButton").image,
+        });
+        pauseButton.clicked += () =>
+        {
+            PauseClicked?.Invoke(this, index);
+        };
+    }
+
+    public PlayListItemElement()
+    {
+        
+    }
+
+}
