@@ -7,9 +7,9 @@ public class VideoClipEntry
     public string name;
     public string filePath; // Absolute or relative path to the .webm file
 
-    public VideoClipVM GetVM()
+    public PlayListItemElementVM GetVM()
     {
-        var viewModel = ScriptableObject.CreateInstance<VideoClipVM>();
+        var viewModel = ScriptableObject.CreateInstance<PlayListItemElementVM>();
 
         viewModel.Title = name;
         viewModel.PlayButtonVisibility = DisplayStyle.Flex;

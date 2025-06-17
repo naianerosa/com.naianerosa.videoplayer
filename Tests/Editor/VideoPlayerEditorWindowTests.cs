@@ -69,7 +69,7 @@ public class VideoPlayerEditorWindowTests
 
         // Verify root element has data source set and title matches
         Assert.That(rootElement.dataSource, Is.Not.Null);
-        Assert.AreEqual(((VideoPlayListVM)(rootElement.dataSource)).name, mockPlaylist1.GetVM().name);
+        Assert.AreEqual(((VideoPlayerEditorWindowVM)(rootElement.dataSource)).name, mockPlaylist1.GetVM().name);
 
         //Sets the second playlist to the picker
         var mockPlaylist2 = ScriptableObject.CreateInstance<VideoPlaylist>();
@@ -78,7 +78,7 @@ public class VideoPlayerEditorWindowTests
 
         // Verify root element has data source set and title matches    
         Assert.That(rootElement.dataSource, Is.Not.Null);
-        Assert.AreEqual(((VideoPlayListVM)(rootElement.dataSource)).name, mockPlaylist2.GetVM().name);
+        Assert.AreEqual(((VideoPlayerEditorWindowVM)(rootElement.dataSource)).name, mockPlaylist2.GetVM().name);
 
         UnityEngine.Object.DestroyImmediate(mockPlaylist1);
         UnityEngine.Object.DestroyImmediate(mockPlaylist2);

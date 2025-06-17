@@ -47,8 +47,8 @@
                 </Bindings>
             </ui:Label>
             <ui:ScrollView name="playlist" class="playlist">
-                <ui:Instance template="playlist-item" name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoClipVM.asset?fileID=11400000&amp;guid=ed9c55c6da653b242a60369d6ba94f64&amp;type=2#VideoClipVM" />
-                <ui:Instance template="playlist-item" name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoClipVM.asset?fileID=11400000&amp;guid=ed9c55c6da653b242a60369d6ba94f64&amp;type=2#VideoClipVM" />
+                <ui:Instance template="playlist-item" name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElementVM.asset?fileID=11400000&amp;guid=ed9c55c6da653b242a60369d6ba94f64&amp;type=2#PlayListItemElementVMmElementVM" />
+                <ui:Instance template="playlist-item" name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElementVM.asset?fileID=11400000&amp;guid=ed9c55c6da653b242a60369d6ba94f64&amp;type=2#PlayListItemElementVM" />
             </ui:ScrollView>
             <Bindings>
                 <ui:DataBinding property="style.display" data-source-path="VideoContainerVisibility" binding-mode="ToTarget" />

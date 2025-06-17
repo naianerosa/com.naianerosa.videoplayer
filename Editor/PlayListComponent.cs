@@ -3,15 +3,14 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-[assembly: InternalsVisibleTo("VideoPlayer.Editor.Tests")]
 public class PlayListComponent
 {
     private VisualElement playlistContainer;
     private IEditorVideoPlayerHandler videoPlayerComponent;
-    private List<VideoClipVM> videos = new List<VideoClipVM>();
+    //private List<VideoClipVM> videos = new List<PlayListItemElementVMmElementVM>();
     private int currentIndex = 0;
     private TemplateContainer playlistItemTemplate;
-    private VideoPlayListVM viewModel;
+    private VideoPlayerEditorWindowVM viewModel;
 
     public PlayListComponent(
         VisualElement root,
@@ -71,9 +70,8 @@ public class PlayListComponent
         prev.clicked += Previous;
     }
 
-    public VideoPlayListVM LoadPlaylist(VideoPlaylist playlist)
-    {
-        videos.Clear();
+    public VideoPlayerEditorWindowVM LoadPlaylist(VideoPlaylist playlist)
+    {   
         playlistContainer.Clear();
         viewModel = playlist.GetVM();
         playlistContainer.dataSource = viewModel;
@@ -113,7 +111,7 @@ public class PlayListComponent
             };
 
             playlistContainer.Add(itemRoot);
-            videos.Add(videoViewModel);
+            viewModel.Videos.Add(videoViewModel);
         }
 
         currentIndex = 0;
@@ -123,55 +121,45 @@ public class PlayListComponent
 
     public void Stop()
     {
-        videos[currentIndex].Pause();
+        viewModel.Videos[currentIndex].Pause();
         viewModel.Pause();
         videoPlayerComponent.StopVideo();
     }
 
     public void Pause()
     {
-        videos[currentIndex].Pause();
+        viewModel.Videos[currentIndex].Pause();
         videoPlayerComponent.Pause();
         viewModel.Pause();
     }
 
     public void Next()
     {
-        if (videos == null || videos.Count == 0) return;
-        currentIndex = (currentIndex + 1) % videos.Count; //Return to 0 if it exceeds the count                                                                      
+        if (viewModel.Videos == null || viewModel.Videos.Count == 0) return;
+        currentIndex = (currentIndex + 1) % viewModel.Videos.Count; //Return to 0 if it exceeds the count                                                                      
         Play();
 
     }
 
     public void Previous()
     {
-        if (videos == null || videos.Count == 0) return;
-        currentIndex = (currentIndex - 1 + videos.Count) % videos.Count; //Return to 0 if it exceeds the count        
-        videos[currentIndex].Play();
+        if (viewModel.Videos == null || viewModel.Videos.Count == 0) return;
+        currentIndex = (currentIndex - 1 + viewModel.Videos.Count) % viewModel.Videos.Count; //Return to 0 if it exceeds the count        
+        viewModel.Videos[currentIndex].Play();
         Play();
     }
 
     public void Play()
     {
-        if (videos == null || videos.Count == 0) return;
+        if (viewModel.Videos == null || viewModel.Videos.Count == 0) return;
 
-        videos.ForEach(a => a.ResetClipState());
+        viewModel.Videos.ForEach(a => a.ResetClipState());
 
-        var videoToPlay = videos[currentIndex];
+        var videoToPlay = viewModel.Videos[currentIndex];
         videoToPlay.Play();
         viewModel.CurrentVideoTitle = videoToPlay.Title;
         viewModel.Play();
 
         videoPlayerComponent.PlayVideo(videoToPlay.FilePath);
-    }
-
-    internal List<VideoClipVM> GetCurrentVideosViewModel()
-    {
-        return videos;
-    }
-
-    internal VideoPlayListVM GetPlayListViewModel()
-    {
-        return viewModel;
     }
 }

@@ -9,9 +9,9 @@ public class VideoPlaylist : ScriptableObject
     public List<VideoClipEntry> videoClips = new();
 
 
-    public VideoPlayListVM GetVM()
+    public VideoPlayerEditorWindowVM GetVM()
     {
-        var viewModel = ScriptableObject.CreateInstance<VideoPlayListVM>();
+        var viewModel = ScriptableObject.CreateInstance<VideoPlayerEditorWindowVM>();
 
         viewModel.Title = title;
         viewModel.PlayButtonVisibility = DisplayStyle.Flex;

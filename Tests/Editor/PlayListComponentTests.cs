@@ -47,12 +47,11 @@ public class PlayListComponentTest
     public void LoadPlaylist_HasCorrectNumberOfVideosAndState()
     {
         var viewModel = playListComponent.LoadPlaylist(mockPlayList);
-        var playListItems = playListComponent.GetCurrentVideosViewModel();
 
         //Check items and buttons states
         Assert.IsNotNull(viewModel);
-        Assert.That(playListItems.Count, Is.EqualTo(mockPlayList.videoClips.Count));
-        AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: 0);
+        Assert.That(viewModel.Videos.Count, Is.EqualTo(mockPlayList.videoClips.Count));
+        AssertButtonStates(viewModel, mainButtonPlaying: true, indexOfPlayingVideo: 0);
 
         //Check containers visibility
         Assert.AreEqual(DisplayStyle.Flex, viewModel.VideoContainerVisibility, "Videos container should be visible");
@@ -69,8 +68,8 @@ public class PlayListComponentTest
 
         //Check items and buttons states
         Assert.IsNotNull(viewModel);
-        Assert.That(playListItems.Count, Is.EqualTo(newPlayList.videoClips.Count));
-        AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: 0);
+        Assert.That(viewModel.Videos.Count, Is.EqualTo(newPlayList.videoClips.Count));
+        AssertButtonStates(viewModel, mainButtonPlaying: true, indexOfPlayingVideo: 0);
 
         //Check containers visibility
         Assert.AreEqual(DisplayStyle.Flex, viewModel.VideoContainerVisibility, "Videos container should be visible");
@@ -84,7 +83,7 @@ public class PlayListComponentTest
     {
         var emptyPlaylist = ScriptableObject.CreateInstance<VideoPlaylist>();
 
-        VideoPlayListVM viewModel = playListComponent.LoadPlaylist(emptyPlaylist);
+        VideoPlayerEditorWindowVM viewModel = playListComponent.LoadPlaylist(emptyPlaylist);
 
         Assert.IsNotNull(viewModel, "ViewModel should not be null for an empty playlist.");
         Assert.AreEqual(DisplayStyle.Flex, viewModel.NoVideosLabelVisibility, "No videos label should be visible");
@@ -96,75 +95,74 @@ public class PlayListComponentTest
     [Test]
     public void Play_ButtonsAreOnCorrectState()
     {
-        playListComponent.LoadPlaylist(mockPlayList);
+        var vm = playListComponent.LoadPlaylist(mockPlayList);
         playListComponent.Pause();
         playListComponent.Play();
-        AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: 0);
+        AssertButtonStates(vm, mainButtonPlaying: true, indexOfPlayingVideo: 0);
     }
 
     [Test]
     public void Next_ButtonsAreOnCorrectState()
     {
-        playListComponent.LoadPlaylist(mockPlayList);
+        var vm = playListComponent.LoadPlaylist(mockPlayList);
         playListComponent.Next();
 
-        AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: 1);
+        AssertButtonStates(vm, mainButtonPlaying: true, indexOfPlayingVideo: 1);
     }
 
     [Test]
     public void Next_MoreTimesThanVideos_GoesBackToFirst()
     {
-        playListComponent.LoadPlaylist(mockPlayList);
+        var vm = playListComponent.LoadPlaylist(mockPlayList);
         for (int i = 1; i < mockPlayList.videoClips.Count; i++)
         {
             playListComponent.Next();
         }
         playListComponent.Next(); //Once more, should go back to first video
 
-        AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: 0);
+        AssertButtonStates(vm, mainButtonPlaying: true, indexOfPlayingVideo: 0);
     }
 
     [Test]
     public void Previous_ButtonsAreOnCorrectState()
     {
-        playListComponent.LoadPlaylist(mockPlayList);
+        var vm = playListComponent.LoadPlaylist(mockPlayList);
         playListComponent.Next(); // Move to second video
         playListComponent.Previous(); // Move back to first
 
-        AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: 0);
+        AssertButtonStates(vm, mainButtonPlaying: true, indexOfPlayingVideo: 0);
     }
 
     [Test]
     public void Previous_OnFirstVideo_GoesBackToLast()
     {
-        playListComponent.LoadPlaylist(mockPlayList);
+        var vm = playListComponent.LoadPlaylist(mockPlayList);
         playListComponent.Previous(); // Move to last video
 
-        AssertButtonStates(mainButtonPlaying: true, indexOfPlayingVideo: mockPlayList.videoClips.Count - 1);
+        AssertButtonStates(vm, mainButtonPlaying: true, indexOfPlayingVideo: mockPlayList.videoClips.Count - 1);
     }
 
     [Test]
     public void Stop_ButtonsAreOnCorrectState()
     {
-        playListComponent.LoadPlaylist(mockPlayList);
+        var vm = playListComponent.LoadPlaylist(mockPlayList);
         playListComponent.Stop();
 
-        AssertButtonStates(mainButtonPlaying: false, indexOfPlayingVideo: -1);
+        AssertButtonStates(vm, mainButtonPlaying: false, indexOfPlayingVideo: -1);
     }
 
     [Test]
     public void Pause_ButtonsAreOnCorrectState()
     {
-        playListComponent.LoadPlaylist(mockPlayList);
+        var vm = playListComponent.LoadPlaylist(mockPlayList);
         playListComponent.Pause();
 
-        AssertButtonStates(mainButtonPlaying: false, indexOfPlayingVideo: -1);
+        AssertButtonStates(vm, mainButtonPlaying: false, indexOfPlayingVideo: -1);
     }
 
-    private void AssertButtonStates(bool mainButtonPlaying, int indexOfPlayingVideo)
+    private void AssertButtonStates(VideoPlayerEditorWindowVM playlist, bool mainButtonPlaying, int indexOfPlayingVideo)
     {
-        var playlist = playListComponent.GetPlayListViewModel();
-        var currentVideos = playListComponent.GetCurrentVideosViewModel();
+        var currentVideos = playlist.Videos;
 
         DisplayStyle expectedMainButtonPlay = mainButtonPlaying ? DisplayStyle.None : DisplayStyle.Flex;
         DisplayStyle expectedMainButtonPause = mainButtonPlaying ? DisplayStyle.Flex : DisplayStyle.None;

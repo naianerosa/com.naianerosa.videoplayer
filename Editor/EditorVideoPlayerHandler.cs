@@ -3,7 +3,17 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Video;
 
-public class EditorVideoPlayerHandler
+public interface IEditorVideoPlayerHandler
+{
+    void Destroy();
+    void DrawVideoFrame();
+    void LoadNewVideo(string videoPath);
+    void Pause();
+    void PlayVideo(string filePath = "");
+    void StopVideo();
+}
+
+public class EditorVideoPlayerHandler : IEditorVideoPlayerHandler
 {
     private VideoPlayer videoPlayer;
     private IMGUIContainer videoDisplay;
@@ -15,7 +25,7 @@ public class EditorVideoPlayerHandler
     {
         this.videoDisplay = videoDisplay;
         renderTexture = new RenderTexture(512, 288, 0); // 16:9 aspect ratio
-        var go = new GameObject(VideoPlayerName, typeof(VideoPlayer));       
+        var go = new GameObject(VideoPlayerName, typeof(VideoPlayer));
         go.hideFlags = HideFlags.HideAndDontSave;
         videoPlayer = go.GetComponent<VideoPlayer>();
         videoPlayer.playOnAwake = false;
@@ -23,7 +33,7 @@ public class EditorVideoPlayerHandler
         videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
         videoPlayer.SetTargetAudioSource(0, audioSource);
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
-        videoPlayer.targetTexture = renderTexture;       
+        videoPlayer.targetTexture = renderTexture;
     }
 
     public void DrawVideoFrame()

@@ -2,16 +2,14 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/VideoPlayListVM")]
-public class VideoPlayListVM : ScriptableObject
-{
+[CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/PlayListItemElementVM")]
+public class PlayListItemElementVM : ScriptableObject
+{    
     public string Title;
     public DisplayStyle PlayButtonVisibility;
     public DisplayStyle PauseButtonVisibility;
-    public string CurrentVideoTitle;
-
-    public DisplayStyle NoVideosLabelVisibility = DisplayStyle.Flex;
-    public DisplayStyle VideoContainerVisibility = DisplayStyle.None;
+    public string FilePath;
+    public FontStyle TitleFontStyle = FontStyle.Normal;
 
     public void Pause()
     {
@@ -23,5 +21,12 @@ public class VideoPlayListVM : ScriptableObject
     {
         PlayButtonVisibility = DisplayStyle.None;
         PauseButtonVisibility = DisplayStyle.Flex;
+        TitleFontStyle = FontStyle.Bold;
+    }
+
+    public void ResetClipState()
+    {
+        Pause();
+        TitleFontStyle = FontStyle.Normal;
     }
 }

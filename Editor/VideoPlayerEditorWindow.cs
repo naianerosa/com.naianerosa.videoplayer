@@ -33,13 +33,19 @@ public class VideoPlayerEditorWindow : EditorWindow
 
         root.Q<ObjectField>("playlist_picker").RegisterValueChangedCallback(evt =>
         {
-            var playlist = evt.newValue as VideoPlaylist;
-            var playlistVM = playListComponent.LoadPlaylist(playlist);
-            root.Q<VisualElement>("root").dataSource = playlistVM;
+            SetPlaylist(evt.newValue as VideoPlaylist);
         });
+
+        SetPlaylist(ScriptableObject.CreateInstance<VideoPlaylist>()); // Load an empty playlist initially
 
         //Improve Video frame rate in the editor
         EditorApplication.update += Repaint;
+    }
+
+    private void SetPlaylist(VideoPlaylist playlist)
+    {
+        var playlistVM = playListComponent.LoadPlaylist(playlist);
+        rootVisualElement.Q<VisualElement>("root").dataSource = playlistVM;
     }
 
 
