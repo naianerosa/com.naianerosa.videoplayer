@@ -36,7 +36,7 @@ public partial class EditorVideoPlayerElement : VisualElement
 
     public void Init()
     {
-        this.dataSource = new EditorVideoPlayerElementVM();
+        this.dataSource = ScriptableObject.CreateInstance<EditorVideoPlayerElementVM>();
 
         this.playlistItemTemplate = this.Q<TemplateContainer>("playlist-item").templateSource.CloneTree();
 
@@ -85,9 +85,10 @@ public partial class EditorVideoPlayerElement : VisualElement
             return;
         }
 
-        this.dataSource = new EditorVideoPlayerElementVM(videoPlaylist);
+        this.dataSource = ScriptableObject.CreateInstance<EditorVideoPlayerElementVM>();
+        viewModel.Init(videoPlaylist);
 
-        if (this.playlistItemTemplate==null)
+        if (this.playlistItemTemplate == null)
         {
             Debug.LogError("Playlist item template is null, cannot load playlist.");
             return;

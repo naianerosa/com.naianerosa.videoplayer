@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Template name="PlayListItemElement" src="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElement.uxml?fileID=9197481963319205126&amp;guid=89a7ff68f997ae946bef82453db5d671&amp;type=3#PlayListItemElement" />
     <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow.uss?fileID=7433441132597879392&amp;guid=0d19bbabcac07074a869e0e4e7e37784&amp;type=3#VideoPlayerEditorWindow" />
-    <ui:Template name="PlayListItemElement" src="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElement.uxml" />
-    <EditorVideoPlayerElement data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlaylistVM.asset">
+    <EditorVideoPlayerElement data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/EditorVideoPlayerElementVM.asset?fileID=11400000&amp;guid=ab1f289ac2398ee49a51dcb4cfcd46df&amp;type=2#EditorVideoPlayerElementVM">
         <ui:VisualElement name="no-video-container" style="flex-grow: 1; align-items: flex-start;">
             <ui:Label text="No videos to display" style="-unity-font-style: bold; font-size: 18px;" />
             <Bindings>
@@ -40,10 +40,10 @@
                 <Bindings>
                     <ui:DataBinding property="text" data-source-path="Title" binding-mode="ToTarget" />
                 </Bindings>
-            </ui:Label>            
+            </ui:Label>
             <ui:ScrollView name="playlist" class="playlist">
-                <ui:Instance template="PlayListItemElement" name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElementVM.asset?type=2#PlayListItemElementVM" />
-                <ui:Instance template="PlayListItemElement" name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElementVM.asset?type=2#PlayListItemElementVM" />
+                <ui:Instance template="PlayListItemElement" name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElementVM.asset?fileID=11400000&amp;guid=0d1320cecdbf35e41a6725c26609c027&amp;type=2#PlayListItemElementVM" />
+                <ui:Instance template="PlayListItemElement" name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElementVM.asset?fileID=11400000&amp;guid=0d1320cecdbf35e41a6725c26609c027&amp;type=2#PlayListItemElementVM" />
             </ui:ScrollView>
             <Bindings>
                 <ui:DataBinding property="style.display" data-source-path="VideoContainerVisibility" binding-mode="ToTarget" />

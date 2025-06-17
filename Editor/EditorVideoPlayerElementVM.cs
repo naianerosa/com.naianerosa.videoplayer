@@ -27,11 +27,7 @@ public class EditorVideoPlayerElementVM : ScriptableObject
         PauseButtonVisibility = DisplayStyle.Flex;
     }
 
-    public EditorVideoPlayerElementVM()
-    {
-    }
-
-    public EditorVideoPlayerElementVM(VideoPlaylist playlist)
+    public void Init(VideoPlaylist playlist)
     {
         Title = playlist.Title;
         PlayButtonVisibility = DisplayStyle.Flex;
