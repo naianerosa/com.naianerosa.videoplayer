@@ -1,8 +1,8 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="PlayListItemElement" src="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElement.uxml" />
-    <ui:Template name="EditorVideoPlayerElement" src="project://database/Packages/com.naianerosa.videoplayer/Editor/EditorVideoPlayerElement.uxml" />
+    <ui:Template name="PlayListItemElement" src="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElement/PlayListItemElement.uxml" />
+    <ui:Template name="EditorVideoPlayerElement" src="project://database/Packages/com.naianerosa.videoplayer/Editor/EditorVideoPlayerElement/EditorVideoPlayerElement.uxml" />
 
-    <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow.uss" />
+    <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow/VideoPlayerEditorWindow.uss" />
     <ui:VisualElement name="root" style="flex-grow: 1;">
         <ui:VisualElement name="header" class="header">
             <ui:VisualElement name="playlist_picker_container" class="playlist-picker-container">
