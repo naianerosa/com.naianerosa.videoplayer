@@ -37,12 +37,19 @@ public class VideoPlayerEditorWindow : EditorWindow
             editorVideoPlayerElement.LoadPlayList(evt.newValue as VideoPlaylist);
         });
 
+        videoPlayerHandler.LoopPointReached+= VideoPlayerHandler_LoopPointReached;
+
         editorVideoPlayerElement.PlayClicked += EditorVideoPlayerElement_PlayClicked;
         editorVideoPlayerElement.PauseClicked += EditorVideoPlayerElement_PauseClicked;
         editorVideoPlayerElement.StopClicked += EditorVideoPlayerElement_StopClicked;
 
         //Improve Video frame rate in the editor
         EditorApplication.update += Repaint;
+    }
+
+    private void VideoPlayerHandler_LoopPointReached(object sender, System.EventArgs e)
+    {
+        editorVideoPlayerElement.Pause();
     }
 
     private void EditorVideoPlayerElement_PlayClicked(object sender, string filePath)
@@ -65,6 +72,7 @@ public class VideoPlayerEditorWindow : EditorWindow
         editorVideoPlayerElement.PlayClicked -= EditorVideoPlayerElement_PlayClicked;
         editorVideoPlayerElement.PauseClicked -= EditorVideoPlayerElement_PauseClicked;
         editorVideoPlayerElement.StopClicked -= EditorVideoPlayerElement_StopClicked;
+        videoPlayerHandler.LoopPointReached -= VideoPlayerHandler_LoopPointReached;
         videoPlayerHandler.Destroy();
     }
 }

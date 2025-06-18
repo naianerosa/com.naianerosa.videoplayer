@@ -33,7 +33,7 @@ public partial class PlayListItemElement : VisualElement
         pauseButton.text = "";
         pauseButton.Add(new Image
         {
-            image = EditorGUIUtility.IconContent(EditorVideoPlayerConstants.PlayButtonIcon).image,
+            image = EditorGUIUtility.IconContent(EditorVideoPlayerConstants.PauseButtonIcon).image,
         });
         pauseButton.clicked += () =>
         {

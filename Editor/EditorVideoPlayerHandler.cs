@@ -13,6 +13,7 @@ public class EditorVideoPlayerHandler
     private RenderTexture renderTexture;
     private long pausedFrame = -1;
     public const string VideoPlayerName = "EditorVideoPlayer";
+    public EventHandler LoopPointReached;
 
     public EditorVideoPlayerHandler(IMGUIContainer videoDisplay)
     {
@@ -28,6 +29,13 @@ public class EditorVideoPlayerHandler
         videoPlayer.SetTargetAudioSource(0, audioSource);
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
         videoPlayer.targetTexture = renderTexture;
+
+        videoPlayer.loopPointReached += VideoPlayer_loopPointReached;
+    }
+
+    private void VideoPlayer_loopPointReached(VideoPlayer source)
+    {
+        LoopPointReached?.Invoke(this, EventArgs.Empty);
     }
 
     public void DrawVideoFrame()
