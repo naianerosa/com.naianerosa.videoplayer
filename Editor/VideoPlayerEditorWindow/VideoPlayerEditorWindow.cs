@@ -12,7 +12,7 @@ public class VideoPlayerEditorWindow : EditorWindow
     private VisualTreeAsset m_VisualTreeAsset = default;
     private EditorVideoPlayerHandler videoPlayerHandler;
     public EditorVideoPlayerElement editorVideoPlayerElement;
-    private VideoPlayerEditorWindowVM viewModel => rootVisualElement.Q<VisualElement>("root").dataSource as VideoPlayerEditorWindowVM;
+    public VideoPlayerEditorWindowVM viewModel => rootVisualElement.Q<VisualElement>("root").dataSource as VideoPlayerEditorWindowVM;
 
     [MenuItem("Window/Video Player")]
     public static void NewWindow()
