@@ -18,7 +18,7 @@ public class EditorVideoPlayerHandler
     {
         this.videoDisplay = videoDisplay;
         renderTexture = new RenderTexture(512, 288, 0); // 16:9 aspect ratio
-        var go = new GameObject(VideoPlayerName, typeof(VideoPlayer));
+        var go = new GameObject(EditorVideoPlayerConstants.VideoPlayerName, typeof(VideoPlayer));
         go.hideFlags = HideFlags.HideAndDontSave;
         videoPlayer = go.GetComponent<VideoPlayer>();
         videoPlayer.playOnAwake = false;
@@ -64,11 +64,11 @@ public class EditorVideoPlayerHandler
 
     public void PlayVideo(string filePath = "")
     {
-        if(filePath == "")
+        if (string.IsNullOrEmpty(filePath))
         {
             videoPlayer.Stop();
             videoPlayer.url = "";
-            videoPlayer.controlledAudioTrackCount = 1; //test
+            videoPlayer.controlledAudioTrackCount = 1;
             return;
         }
 

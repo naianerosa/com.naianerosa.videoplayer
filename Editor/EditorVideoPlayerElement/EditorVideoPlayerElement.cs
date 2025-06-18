@@ -43,35 +43,35 @@ public partial class EditorVideoPlayerElement : VisualElement
         play.text = "";
         play.Add(new Image
         {
-            image = EditorGUIUtility.IconContent("d_PlayButton@2x").image,
+            image = EditorGUIUtility.IconContent(EditorVideoPlayerConstants.PlayButtonIcon).image,
         });
         play.clicked += Play;
 
         pause.text = "";
         pause.Add(new Image
         {
-            image = EditorGUIUtility.IconContent("d_PauseButton@2x").image,
+            image = EditorGUIUtility.IconContent(EditorVideoPlayerConstants.PauseButtonIcon).image,
         });
         pause.clicked += Pause;
 
         stop.text = "";
         stop.Add(new Image
         {
-            image = EditorGUIUtility.IconContent("d_StopButton@2x").image,
+            image = EditorGUIUtility.IconContent(EditorVideoPlayerConstants.StopButtonIcon).image,
         });
         stop.clicked += Stop;
 
         next.text = "";
         next.Add(new Image
         {
-            image = EditorGUIUtility.IconContent("Animation.NextKey").image,
+            image = EditorGUIUtility.IconContent(EditorVideoPlayerConstants.NextButtonIcon).image,
         });
         next.clicked += Next;
 
         prev.text = "";
         prev.Add(new Image
         {
-            image = EditorGUIUtility.IconContent("Animation.PrevKey").image,
+            image = EditorGUIUtility.IconContent(EditorVideoPlayerConstants.PrevButtonIcon).image,
         });
 
         prev.clicked += Previous;
