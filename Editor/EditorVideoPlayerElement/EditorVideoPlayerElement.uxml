@@ -3,7 +3,12 @@
     <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow/VideoPlayerEditorWindow.uss?fileID=7433441132597879392&amp;guid=0d19bbabcac07074a869e0e4e7e37784&amp;type=3#VideoPlayerEditorWindow" />
     <EditorVideoPlayerElement data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/EditorVideoPlayerElement/EditorVideoPlayerElementVM.asset?fileID=11400000&amp;guid=ab1f289ac2398ee49a51dcb4cfcd46df&amp;type=2#EditorVideoPlayerElementVM">
         <ui:VisualElement name="no-video-container" style="flex-grow: 1; align-items: flex-start;">
-            <ui:Label text="No videos to display" style="-unity-font-style: bold; font-size: 18px;" />
+            <ui:Label text="Label" name="playlist-label" class="playlist-label" style="-unity-text-align: upper-center; flex-grow: 0;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="Title" binding-mode="ToTarget" />
+                </Bindings>
+            </ui:Label>
+            <ui:Label text="No videos found in this playlist" name="Label" class="label-info" style="flex-grow: 1; margin-left: 14px;" />
             <Bindings>
                 <ui:DataBinding property="style.display" data-source-path="NoVideosLabelVisibility" binding-mode="ToTarget" />
             </Bindings>

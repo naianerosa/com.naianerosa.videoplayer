@@ -82,10 +82,10 @@ public partial class EditorVideoPlayerElement : VisualElement
         this.dataSource = ScriptableObject.CreateInstance<EditorVideoPlayerElementVM>();
         this.playListVideosContainer.Clear();
 
+        viewModel.Init(videoPlaylist);
+
         if (videoPlaylist != null)
         {
-            viewModel.Init(videoPlaylist);
-
             if (this.playlistItemTemplate == null)
             {
                 Debug.LogError("Playlist item template is null, cannot load playlist.");

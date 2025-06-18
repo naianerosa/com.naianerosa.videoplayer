@@ -5,11 +5,13 @@
     flex-grow: 0;
     flex-direction: column;
     margin-bottom: 10px;
+    margin-top: 8px;
 }
 
 .playlist-picker-container {
     flex-grow: 1;
     flex-direction: row;
+    margin-bottom: 8px;
 }
 
 .video-container {
@@ -73,4 +75,10 @@
     padding-left: 8px;
     -unity-font-style: bold;
     font-size: 16px;
+}
+
+.label-info {
+    -unity-font-style: normal;
+    font-size: 14px;
+    -unity-text-align: upper-center;
 }

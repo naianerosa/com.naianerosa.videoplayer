@@ -12,6 +12,7 @@ public class VideoPlayerEditorWindow : EditorWindow
     private VisualTreeAsset m_VisualTreeAsset = default;
     private EditorVideoPlayerHandler videoPlayerHandler;
     public EditorVideoPlayerElement editorVideoPlayerElement;
+    private VideoPlayerEditorWindowVM viewModel => rootVisualElement.Q<VisualElement>("root").dataSource as VideoPlayerEditorWindowVM;
 
     [MenuItem("Window/Video Player")]
     public static void NewWindow()
@@ -25,6 +26,8 @@ public class VideoPlayerEditorWindow : EditorWindow
         VisualElement root = rootVisualElement;
         root.Add(m_VisualTreeAsset.Instantiate());
 
+        root.dataSource = ScriptableObject.CreateInstance<VideoPlayerEditorWindowVM>();
+
         this.editorVideoPlayerElement = root.Q<EditorVideoPlayerElement>();
         editorVideoPlayerElement.Init();
 
@@ -34,10 +37,12 @@ public class VideoPlayerEditorWindow : EditorWindow
 
         root.Q<ObjectField>("playlist_picker").RegisterCallback<ChangeEvent<Object>>((evt) =>
         {
+            viewModel.NoPlayListSelectedContainer = evt.newValue == null ? DisplayStyle.Flex : DisplayStyle.None;
+
             editorVideoPlayerElement.LoadPlayList(evt.newValue as VideoPlaylist);
         });
 
-        videoPlayerHandler.LoopPointReached+= VideoPlayerHandler_LoopPointReached;
+        videoPlayerHandler.LoopPointReached += VideoPlayerHandler_LoopPointReached;
 
         editorVideoPlayerElement.PlayClicked += EditorVideoPlayerElement_PlayClicked;
         editorVideoPlayerElement.PauseClicked += EditorVideoPlayerElement_PauseClicked;

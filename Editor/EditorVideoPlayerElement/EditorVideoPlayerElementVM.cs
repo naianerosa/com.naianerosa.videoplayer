@@ -17,7 +17,7 @@ public class EditorVideoPlayerElementVM : ScriptableObject
     public DisplayStyle PauseButtonVisibility;
     public string CurrentVideoTitle;
 
-    public DisplayStyle NoVideosLabelVisibility = DisplayStyle.Flex;
+    public DisplayStyle NoVideosLabelVisibility = DisplayStyle.None;
     public DisplayStyle VideoContainerVisibility = DisplayStyle.None;
 
     public List<PlayListItemElementVM> Videos = new List<PlayListItemElementVM>();
@@ -36,22 +36,33 @@ public class EditorVideoPlayerElementVM : ScriptableObject
 
     public void Init(VideoPlaylist playlist)
     {
-        Title = playlist.Title;
-        PlayButtonVisibility = DisplayStyle.Flex;
-        PauseButtonVisibility = DisplayStyle.None;
-        NoVideosLabelVisibility = playlist.Videos == null || playlist.Videos.Length == 0 ? DisplayStyle.Flex : DisplayStyle.None;
-        VideoContainerVisibility = playlist.Videos != null && playlist.Videos.Length > 0 ? DisplayStyle.Flex : DisplayStyle.None;
         Videos.Clear();
-
-        if (playlist.Videos != null)
+        if (playlist == null)
         {
-            foreach (VideoClip video in playlist.Videos)
+            Title = "No Playlist Loaded";
+            PlayButtonVisibility = DisplayStyle.None;
+            PauseButtonVisibility = DisplayStyle.None;
+            NoVideosLabelVisibility = DisplayStyle.None;
+            VideoContainerVisibility = DisplayStyle.None;
+        }
+        else
+        {
+            Title = playlist.Title;
+            PlayButtonVisibility = DisplayStyle.Flex;
+            PauseButtonVisibility = DisplayStyle.None;
+            NoVideosLabelVisibility = playlist.Videos == null || playlist.Videos.Length == 0 ? DisplayStyle.Flex : DisplayStyle.None;
+            VideoContainerVisibility = playlist.Videos != null && playlist.Videos.Length > 0 ? DisplayStyle.Flex : DisplayStyle.None;
+
+            if (playlist.Videos != null)
             {
-                var videoVM = ScriptableObject.CreateInstance<PlayListItemElementVM>();
-                videoVM.Title = video.name;
-                videoVM.FilePath = video.originalPath;
-                videoVM.ResetClipState();
-                Videos.Add(videoVM);
+                foreach (VideoClip video in playlist.Videos)
+                {
+                    var videoVM = ScriptableObject.CreateInstance<PlayListItemElementVM>();
+                    videoVM.Title = video.name;
+                    videoVM.FilePath = video.originalPath;
+                    videoVM.ResetClipState();
+                    Videos.Add(videoVM);
+                }
             }
         }
     }

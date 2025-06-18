@@ -1,14 +1,19 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="PlayListItemElement" src="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElement/PlayListItemElement.uxml" />
-    <ui:Template name="EditorVideoPlayerElement" src="project://database/Packages/com.naianerosa.videoplayer/Editor/EditorVideoPlayerElement/EditorVideoPlayerElement.uxml" />
-
-    <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow/VideoPlayerEditorWindow.uss" />
-    <ui:VisualElement name="root" style="flex-grow: 1;">
+    <ui:Template name="EditorVideoPlayerElement" src="project://database/Packages/com.naianerosa.videoplayer/Editor/EditorVideoPlayerElement/EditorVideoPlayerElement.uxml?fileID=9197481963319205126&amp;guid=8f04ffe01ea6ebe43906e95276a5a9e9&amp;type=3#EditorVideoPlayerElement" />
+    <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow/VideoPlayerEditorWindow.uss?fileID=7433441132597879392&amp;guid=0d19bbabcac07074a869e0e4e7e37784&amp;type=3#VideoPlayerEditorWindow" />
+    <ui:VisualElement name="root" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow/VideoPlayerEditorWindowVM.asset?fileID=11400000&amp;guid=6c966fb2236b7494ea8dc5b66633f3a8&amp;type=2#VideoPlayerEditorWindowVM" style="flex-grow: 1;">
         <ui:VisualElement name="header" class="header">
             <ui:VisualElement name="playlist_picker_container" class="playlist-picker-container">
                 <uie:ObjectField name="playlist_picker" label="Video Playlist" type="VideoPlaylist, VideoPlayer.Editor" style="flex-grow: 1;" />
             </ui:VisualElement>
+            <ui:VisualElement name="no-playlist-selected-container" style="flex-grow: 1; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;">
+                <ui:Label text="Select a video playlist to see its videos&#10;" name="no-playlist-selected-label" class="label-info">
+                    <Bindings>
+                        <ui:DataBinding property="style.display" data-source-path="NoPlayListSelectedContainer" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:Instance template="EditorVideoPlayerElement"/>        
+        <ui:Instance template="EditorVideoPlayerElement" />
     </ui:VisualElement>
 </ui:UXML>
