@@ -3,7 +3,13 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Video;
 
-[CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/EditorVideoPlayerElementVM")]
+/// <summary>
+/// ViewModel for the <see cref="EditorVideoPlayerElement"/>.
+/// The view model contain all the properties that are binded to the UI elements 
+/// and some methods to control the video player state.
+/// This view model was created as a ScriptableObject to allow for easy experiments in the UI Builder.
+/// </summary>
+//[CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/EditorVideoPlayerElementVM")]
 public class EditorVideoPlayerElementVM : ScriptableObject
 {
     public string Title;

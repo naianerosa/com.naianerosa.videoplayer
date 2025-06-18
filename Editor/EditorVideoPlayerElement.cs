@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// UI Element that controls the main video player actions in the UI
+/// </summary>
 [UxmlElement]
 public partial class EditorVideoPlayerElement : VisualElement
 {
@@ -14,6 +17,10 @@ public partial class EditorVideoPlayerElement : VisualElement
 
     public event ButtonClickHandler StopClicked;
 
+    public IMGUIContainer videoDisplay => this.Q<IMGUIContainer>("video-display");
+
+    public EditorVideoPlayerElementVM viewModel => this.dataSource as EditorVideoPlayerElementVM;
+
     private Button play => this.Q<Button>("play-button");
     private Button pause => this.Q<Button>("pause-button");
     private Button stop => this.Q<Button>("stop-button");
@@ -25,14 +32,7 @@ public partial class EditorVideoPlayerElement : VisualElement
     private TemplateContainer playlistItemTemplate;
     private int currentIndex = 0;
 
-    public IMGUIContainer videoDisplay => this.Q<IMGUIContainer>("video-display");
-
-    public EditorVideoPlayerElementVM viewModel => this.dataSource as EditorVideoPlayerElementVM;
-
-    public EditorVideoPlayerElement()
-    {
-
-    }
+    public EditorVideoPlayerElement() { }
 
     public void Init()
     {
@@ -165,6 +165,4 @@ public partial class EditorVideoPlayerElement : VisualElement
         }
 
     }
-
-
 }

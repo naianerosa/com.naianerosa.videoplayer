@@ -3,7 +3,9 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Video;
 
-
+/// <summary>
+/// Video player handler, responsible for managing the video player component and rendering video frames in the editor.
+/// </summary>
 public class EditorVideoPlayerHandler
 {
     private VideoPlayer videoPlayer;

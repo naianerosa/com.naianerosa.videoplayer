@@ -3,14 +3,15 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// Main editor window for the Video Player package.
+/// </summary>
 public class VideoPlayerEditorWindow : EditorWindow
 {
     [SerializeField]
     private VisualTreeAsset m_VisualTreeAsset = default;
     private EditorVideoPlayerHandler videoPlayerHandler;
     public EditorVideoPlayerElement editorVideoPlayerElement;
-
-    //private PlayListComponent playListComponent;
 
     [MenuItem("Window/Video Player")]
     public static void NewWindow()

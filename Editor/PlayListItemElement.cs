@@ -1,6 +1,9 @@
 ﻿using UnityEditor;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// The UI Element that represents a single item in the video playlist.
+/// </summary>
 [UxmlElement]
 public partial class PlayListItemElement : VisualElement
 {
@@ -10,15 +13,12 @@ public partial class PlayListItemElement : VisualElement
 
     public event ItemButtonClickHandler PauseClicked;
 
-    private int index;
-
     private Button playButton => this.Q<Button>("playlist-item-button-play");
     private Button pauseButton => this.Q<Button>("playlist-item-button-pause");
 
     public void Init(PlayListItemElementVM viewModel, int index)
     {
         this.dataSource = viewModel;
-        this.index = index;
 
         playButton.text = "";
         playButton.Add(new Image
@@ -41,9 +41,6 @@ public partial class PlayListItemElement : VisualElement
         };
     }
 
-    public PlayListItemElement()
-    {
-        
-    }
+    public PlayListItemElement() { }
 
 }
