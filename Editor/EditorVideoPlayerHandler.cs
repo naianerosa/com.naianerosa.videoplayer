@@ -22,6 +22,7 @@ public class EditorVideoPlayerHandler
         videoPlayer.playOnAwake = false;
         AudioSource audioSource = videoPlayer.gameObject.AddComponent<AudioSource>();
         videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
+        videoPlayer.controlledAudioTrackCount = 1;
         videoPlayer.SetTargetAudioSource(0, audioSource);
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
         videoPlayer.targetTexture = renderTexture;
@@ -65,6 +66,7 @@ public class EditorVideoPlayerHandler
         {
             videoPlayer.Stop();
             videoPlayer.url = "";
+            videoPlayer.controlledAudioTrackCount = 1; //test
             return;
         }
 
