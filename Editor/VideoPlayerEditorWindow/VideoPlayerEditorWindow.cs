@@ -37,9 +37,9 @@ public class VideoPlayerEditorWindow : EditorWindow
 
         root.Q<ObjectField>("playlist_picker").RegisterCallback<ChangeEvent<Object>>((evt) =>
         {
-            viewModel.NoPlayListSelectedContainer = evt.newValue == null ? DisplayStyle.Flex : DisplayStyle.None;
-
-            editorVideoPlayerElement.LoadPlayList(evt.newValue as VideoPlaylist);
+            var playlist = evt.newValue as VideoPlaylist;
+            viewModel.SetPlaylist(playlist);
+            editorVideoPlayerElement.LoadPlayList(playlist);
         });
 
         videoPlayerHandler.LoopPointReached += VideoPlayerHandler_LoopPointReached;

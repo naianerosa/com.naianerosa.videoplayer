@@ -3,18 +3,18 @@
     <PlayListItemElement name="playlist-item" class="playlist-item">
         <ui:Label name="playlist-item-label" text="My Video 001" class="playlist-item-label">
             <Bindings>
-                <ui:DataBinding property="text" data-source-path="Title" binding-mode="ToTarget" />
-                <ui:DataBinding property="style.unityFontStyleAndWeight" data-source-path="TitleFontStyle" binding-mode="ToTarget" />
+                <ui:DataBinding property="text" data-source-path="title" binding-mode="ToTarget" />
+                <ui:DataBinding property="style.unityFontStyleAndWeight" data-source-path="titleFontStyle" binding-mode="ToTarget" />
             </Bindings>
         </ui:Label>
         <ui:Button name="playlist-item-button-play" text="P" class="button">
             <Bindings>
-                <ui:DataBinding property="style.display" data-source-path="PlayButtonVisibility" binding-mode="ToTarget" />
+                <ui:DataBinding property="style.display" data-source-path="playButtonVisibility" binding-mode="ToTarget" />
             </Bindings>
         </ui:Button>
         <ui:Button name="playlist-item-button-pause" text="P" class="button">
             <Bindings>
-                <ui:DataBinding property="style.display" data-source-path="PauseButtonVisibility" binding-mode="ToTarget" />
+                <ui:DataBinding property="style.display" data-source-path="pauseButtonVisibility" binding-mode="ToTarget" />
             </Bindings>
         </ui:Button>
     </PlayListItemElement>

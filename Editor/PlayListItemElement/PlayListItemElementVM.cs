@@ -11,29 +11,50 @@ using UnityEngine.UIElements;
 /// </summary>
 //[CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/PlayListItemElementVM")]
 public class PlayListItemElementVM : ScriptableObject
-{    
-    public string Title;
-    public DisplayStyle PlayButtonVisibility;
-    public DisplayStyle PauseButtonVisibility;
-    public string FilePath;
-    public FontStyle TitleFontStyle = FontStyle.Normal;
+{
+    [SerializeField]
+    private string title;
+    public string Title => title;
+
+    [SerializeField]
+    private DisplayStyle playButtonVisibility;
+    public DisplayStyle PlayButtonVisibility => playButtonVisibility;
+
+    [SerializeField]
+    private DisplayStyle pauseButtonVisibility;
+    public DisplayStyle PauseButtonVisibility => pauseButtonVisibility;
+
+    [SerializeField]
+    private string filePath;
+    public string FilePath => filePath;
+
+    [SerializeField]
+    private FontStyle titleFontStyle = FontStyle.Normal;
+    public FontStyle TitleFontStyle => titleFontStyle;
+
+    public void Initialize(string title, string filePath)
+    {
+        this.title = title;
+        this.filePath = filePath;
+        ResetClipState();
+    }
 
     public void Pause()
     {
-        PlayButtonVisibility = DisplayStyle.Flex;
-        PauseButtonVisibility = DisplayStyle.None;
+        playButtonVisibility = DisplayStyle.Flex;
+        pauseButtonVisibility = DisplayStyle.None;
     }
 
     public void Play()
     {
-        PlayButtonVisibility = DisplayStyle.None;
-        PauseButtonVisibility = DisplayStyle.Flex;
-        TitleFontStyle = FontStyle.Bold;
+        playButtonVisibility = DisplayStyle.None;
+        pauseButtonVisibility = DisplayStyle.Flex;
+        titleFontStyle = FontStyle.Bold;
     }
 
     public void ResetClipState()
     {
         Pause();
-        TitleFontStyle = FontStyle.Normal;
+        titleFontStyle = FontStyle.Normal;
     }
 }

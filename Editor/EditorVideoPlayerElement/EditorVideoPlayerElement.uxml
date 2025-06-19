@@ -5,12 +5,12 @@
         <ui:VisualElement name="no-video-container" style="flex-grow: 1; align-items: flex-start;">
             <ui:Label text="Label" name="playlist-label" class="playlist-label" style="-unity-text-align: upper-center; flex-grow: 0; width: 100%;">
                 <Bindings>
-                    <ui:DataBinding property="text" data-source-path="Title" binding-mode="ToTarget" />
+                    <ui:DataBinding property="text" data-source-path="title" binding-mode="ToTarget" />
                 </Bindings>
             </ui:Label>
             <ui:Label text="No videos found in this playlist" name="Label" class="label-info" style="flex-grow: 1; margin-left: 14px; width: 100%;" />
             <Bindings>
-                <ui:DataBinding property="style.display" data-source-path="NoVideosLabelVisibility" binding-mode="ToTarget" />
+                <ui:DataBinding property="style.display" data-source-path="noVideosLabelVisibility" binding-mode="ToTarget" />
             </Bindings>
         </ui:VisualElement>
         <ui:VisualElement name="videos-elements" style="flex-grow: 1;">
@@ -20,7 +20,7 @@
                     <ui:VisualElement name="video-controls-title" style="flex-grow: 1; align-items: center; margin-bottom: 6px;">
                         <ui:Label text="Label" style="-unity-font-style: bold; font-size: 18px; -unity-text-align: middle-center;">
                             <Bindings>
-                                <ui:DataBinding property="text" data-source-path="CurrentVideoTitle" binding-mode="ToTarget" />
+                                <ui:DataBinding property="text" data-source-path="currentVideoTitle" binding-mode="ToTarget" />
                             </Bindings>
                         </ui:Label>
                     </ui:VisualElement>
@@ -28,12 +28,12 @@
                         <ui:Button text="&lt;" name="prev-button" class="button" />
                         <ui:Button text="P" name="play-button" class="button">
                             <Bindings>
-                                <ui:DataBinding property="style.display" data-source-path="PlayButtonVisibility" binding-mode="ToTarget" />
+                                <ui:DataBinding property="style.display" data-source-path="playButtonVisibility" binding-mode="ToTarget" />
                             </Bindings>
                         </ui:Button>
                         <ui:Button text="PA" name="pause-button" class="button">
                             <Bindings>
-                                <ui:DataBinding property="style.display" data-source-path="PauseButtonVisibility" binding-mode="ToTarget" />
+                                <ui:DataBinding property="style.display" data-source-path="pauseButtonVisibility" binding-mode="ToTarget" />
                             </Bindings>
                         </ui:Button>
                         <ui:Button text="S" name="stop-button" class="button" />
@@ -43,7 +43,7 @@
             </ui:VisualElement>
             <ui:Label text="Label" name="playlist-label" class="playlist-label" style="-unity-text-align: upper-center;">
                 <Bindings>
-                    <ui:DataBinding property="text" data-source-path="Title" binding-mode="ToTarget" />
+                    <ui:DataBinding property="text" data-source-path="title" binding-mode="ToTarget" />
                 </Bindings>
             </ui:Label>
             <ui:ScrollView name="playlist" class="playlist">
@@ -51,7 +51,7 @@
                 <ui:Instance template="PlayListItemElement" name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElement/PlayListItemElementVM.asset?fileID=11400000&amp;guid=0d1320cecdbf35e41a6725c26609c027&amp;type=2#PlayListItemElementVM" />
             </ui:ScrollView>
             <Bindings>
-                <ui:DataBinding property="style.display" data-source-path="VideoContainerVisibility" binding-mode="ToTarget" />
+                <ui:DataBinding property="style.display" data-source-path="videoContainerVisibility" binding-mode="ToTarget" />
             </Bindings>
         </ui:VisualElement>
     </EditorVideoPlayerElement>

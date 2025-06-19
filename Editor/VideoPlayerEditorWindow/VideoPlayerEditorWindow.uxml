@@ -9,7 +9,7 @@
             <ui:VisualElement name="no-playlist-selected-container" style="flex-grow: 1; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px;">
                 <ui:Label text="Select a video playlist to see its videos&#10;" name="no-playlist-selected-label" class="label-info">
                     <Bindings>
-                        <ui:DataBinding property="style.display" data-source-path="NoPlayListSelectedContainer" binding-mode="ToTarget" />
+                        <ui:DataBinding property="style.display" data-source-path="noPlayListSelectedContainer" binding-mode="ToTarget" />
                     </Bindings>
                 </ui:Label>
             </ui:VisualElement>

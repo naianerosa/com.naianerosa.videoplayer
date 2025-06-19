@@ -12,56 +12,77 @@ using UnityEngine.Video;
 //[CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/EditorVideoPlayerElementVM")]
 public class EditorVideoPlayerElementVM : ScriptableObject
 {
-    public string Title;
-    public DisplayStyle PlayButtonVisibility;
-    public DisplayStyle PauseButtonVisibility;
-    public string CurrentVideoTitle;
+    [SerializeField]
+    private string title;
+    public string Title => title;
 
-    public DisplayStyle NoVideosLabelVisibility = DisplayStyle.None;
-    public DisplayStyle VideoContainerVisibility = DisplayStyle.None;
+    [SerializeField]
+    private DisplayStyle playButtonVisibility;
+    public DisplayStyle PlayButtonVisibility => playButtonVisibility;
 
-    public List<PlayListItemElementVM> Videos = new List<PlayListItemElementVM>();
+    [SerializeField]
+    private DisplayStyle pauseButtonVisibility;
+    public DisplayStyle PauseButtonVisibility => pauseButtonVisibility;
+
+    [SerializeField]
+    private string currentVideoTitle;
+    public string CurrentVideoTitle
+    {
+        get => currentVideoTitle;
+        set => currentVideoTitle = value;
+    }
+
+    [SerializeField]
+    private DisplayStyle noVideosLabelVisibility = DisplayStyle.None;
+    public DisplayStyle NoVideosLabelVisibility => noVideosLabelVisibility;
+
+    [SerializeField]
+    private DisplayStyle videoContainerVisibility = DisplayStyle.None;
+    public DisplayStyle VideoContainerVisibility => videoContainerVisibility;
+
+    [SerializeField]
+    public List<PlayListItemElementVM> videos = new List<PlayListItemElementVM>();
+
+    public List<PlayListItemElementVM> Videos => videos;
 
     public void Pause()
     {
-        PlayButtonVisibility = DisplayStyle.Flex;
-        PauseButtonVisibility = DisplayStyle.None;
+        playButtonVisibility = DisplayStyle.Flex;
+        pauseButtonVisibility = DisplayStyle.None;
     }
 
     public void Play()
     {
-        PlayButtonVisibility = DisplayStyle.None;
-        PauseButtonVisibility = DisplayStyle.Flex;
+        playButtonVisibility = DisplayStyle.None;
+        pauseButtonVisibility = DisplayStyle.Flex;
     }
 
     public void Init(VideoPlaylist playlist)
     {
-        Videos.Clear();
+        videos.Clear();
         if (playlist == null)
         {
-            Title = "No Playlist Loaded";
-            PlayButtonVisibility = DisplayStyle.None;
-            PauseButtonVisibility = DisplayStyle.None;
-            NoVideosLabelVisibility = DisplayStyle.None;
-            VideoContainerVisibility = DisplayStyle.None;
+            title = "No Playlist Loaded";
+            playButtonVisibility = DisplayStyle.None;
+            pauseButtonVisibility = DisplayStyle.None;
+            noVideosLabelVisibility = DisplayStyle.None;
+            videoContainerVisibility = DisplayStyle.None;
         }
         else
         {
-            Title = playlist.Title;
-            PlayButtonVisibility = DisplayStyle.Flex;
-            PauseButtonVisibility = DisplayStyle.None;
-            NoVideosLabelVisibility = playlist.Videos == null || playlist.Videos.Length == 0 ? DisplayStyle.Flex : DisplayStyle.None;
-            VideoContainerVisibility = playlist.Videos != null && playlist.Videos.Length > 0 ? DisplayStyle.Flex : DisplayStyle.None;
+            title = playlist.Title;
+            playButtonVisibility = DisplayStyle.Flex;
+            pauseButtonVisibility = DisplayStyle.None;
+            noVideosLabelVisibility = playlist.Videos == null || playlist.Videos.Length == 0 ? DisplayStyle.Flex : DisplayStyle.None;
+            videoContainerVisibility = playlist.Videos != null && playlist.Videos.Length > 0 ? DisplayStyle.Flex : DisplayStyle.None;
 
             if (playlist.Videos != null)
             {
                 foreach (VideoClip video in playlist.Videos)
                 {
                     var videoVM = ScriptableObject.CreateInstance<PlayListItemElementVM>();
-                    videoVM.Title = video.name;
-                    videoVM.FilePath = video.originalPath;
-                    videoVM.ResetClipState();
-                    Videos.Add(videoVM);
+                    videoVM.Initialize(video.name, video.originalPath);
+                    videos.Add(videoVM);
                 }
             }
         }
