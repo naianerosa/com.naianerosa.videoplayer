@@ -123,7 +123,7 @@ public class EditorVideoPlayerElementVM : ScriptableObject
             }
         }
 
-        ActiveVideo = Videos.Count > 0 ? Videos[0] : null;
+        ActiveVideo = Videos.Count > 0 ? Videos[0] : ScriptableObject.CreateInstance<PlayListItemElementVM>();
     }
 }
 
