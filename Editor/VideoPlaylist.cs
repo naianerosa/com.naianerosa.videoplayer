@@ -8,6 +8,11 @@ using UnityEngine.Video;
 [CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/Video Playlist")]
 public class VideoPlaylist : ScriptableObject
 {
-    public string Title;
-    public VideoClip[] Videos;
+    [SerializeField]
+    private string title;
+    public string Title => title;
+
+    [SerializeField]
+    private VideoClip[] videos;
+    public VideoClip[] Videos => videos;
 }

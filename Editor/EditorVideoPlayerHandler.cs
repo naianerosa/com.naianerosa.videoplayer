@@ -8,12 +8,11 @@ using UnityEngine.Video;
 /// </summary>
 public class EditorVideoPlayerHandler
 {
+    public EventHandler LoopPointReached;
     private VideoPlayer videoPlayer;
     private IMGUIContainer videoDisplay;
     private RenderTexture renderTexture;
     private long pausedFrame = -1;
-    public const string VideoPlayerName = "EditorVideoPlayer";
-    public EventHandler LoopPointReached;
 
     public EditorVideoPlayerHandler(IMGUIContainer videoDisplay)
     {

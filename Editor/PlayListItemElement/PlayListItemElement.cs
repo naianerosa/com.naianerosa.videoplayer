@@ -15,6 +15,7 @@ public partial class PlayListItemElement : VisualElement
 
     private Button playButton => this.Q<Button>("playlist-item-button-play");
     private Button pauseButton => this.Q<Button>("playlist-item-button-pause");
+    public PlayListItemElement() { }
 
     public void Init(PlayListItemElementVM viewModel, int index)
     {
@@ -41,6 +42,5 @@ public partial class PlayListItemElement : VisualElement
         };
     }
 
-    public PlayListItemElement() { }
 
 }

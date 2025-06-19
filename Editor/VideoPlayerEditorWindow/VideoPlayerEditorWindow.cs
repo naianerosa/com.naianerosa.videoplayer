@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -6,13 +7,22 @@ using UnityEngine.UIElements;
 /// <summary>
 /// Main editor window for the Video Player package.
 /// </summary>
+[assembly: InternalsVisibleTo("VideoPlayer.Editor.Tests")]
 public class VideoPlayerEditorWindow : EditorWindow
 {
     [SerializeField]
-    private VisualTreeAsset m_VisualTreeAsset = default;
+    private VisualTreeAsset visualTreeAsset = default;
     private EditorVideoPlayerHandler videoPlayerHandler;
-    public EditorVideoPlayerElement editorVideoPlayerElement;
-    public VideoPlayerEditorWindowVM viewModel => rootVisualElement.Q<VisualElement>("root").dataSource as VideoPlayerEditorWindowVM;
+
+
+    private EditorVideoPlayerElement editorVideoPlayerElement;
+    internal EditorVideoPlayerElement EditorVideoPlayerElement => editorVideoPlayerElement;
+
+    internal VideoPlayerEditorWindowVM ViewModel
+    {
+        get => rootVisualElement.Q<VisualElement>("root").dataSource as VideoPlayerEditorWindowVM;
+        set => rootVisualElement.Q<VisualElement>("root").dataSource = value;
+    }
 
     [MenuItem("Window/Video Player")]
     public static void NewWindow()
@@ -24,9 +34,9 @@ public class VideoPlayerEditorWindow : EditorWindow
     public void CreateGUI()
     {
         VisualElement root = rootVisualElement;
-        root.Add(m_VisualTreeAsset.Instantiate());
+        root.Add(visualTreeAsset.Instantiate());
 
-        root.dataSource = ScriptableObject.CreateInstance<VideoPlayerEditorWindowVM>();
+        ViewModel = ScriptableObject.CreateInstance<VideoPlayerEditorWindowVM>();
 
         this.editorVideoPlayerElement = root.Q<EditorVideoPlayerElement>();
         editorVideoPlayerElement.Init();
@@ -35,12 +45,12 @@ public class VideoPlayerEditorWindow : EditorWindow
 
         editorVideoPlayerElement.videoDisplay.onGUIHandler = videoPlayerHandler.DrawVideoFrame;
 
-        root.Q<ObjectField>("playlist_picker").RegisterCallback<ChangeEvent<Object>>((evt) =>
+        root.Q<ObjectField>("playlist_picker").RegisterCallback<ChangeEvent<Object>>((EventCallback<ChangeEvent<Object>>)((evt) =>
         {
             var playlist = evt.newValue as VideoPlaylist;
-            viewModel.SetPlaylist(playlist);
+            this.ViewModel.SetPlaylist(playlist);
             editorVideoPlayerElement.LoadPlayList(playlist);
-        });
+        }));
 
         videoPlayerHandler.LoopPointReached += VideoPlayerHandler_LoopPointReached;
 

@@ -1,10 +1,12 @@
-﻿using UnityEditor;
+﻿using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 /// <summary>
 /// UI Element that controls the main video player actions in the UI
 /// </summary>
+[assembly: InternalsVisibleTo("VideoPlayer.Editor.Tests")]
 [UxmlElement]
 public partial class EditorVideoPlayerElement : VisualElement
 {
@@ -19,7 +21,7 @@ public partial class EditorVideoPlayerElement : VisualElement
 
     public IMGUIContainer videoDisplay => this.Q<IMGUIContainer>("video-display");
 
-    public EditorVideoPlayerElementVM viewModel => this.dataSource as EditorVideoPlayerElementVM;
+    internal EditorVideoPlayerElementVM ViewModel => this.dataSource as EditorVideoPlayerElementVM;
 
     private Button play => this.Q<Button>("play-button");
     private Button pause => this.Q<Button>("pause-button");
@@ -82,7 +84,7 @@ public partial class EditorVideoPlayerElement : VisualElement
         this.dataSource = ScriptableObject.CreateInstance<EditorVideoPlayerElementVM>();
         this.playListVideosContainer.Clear();
 
-        viewModel.Init(videoPlaylist);
+        ViewModel.Init(videoPlaylist);
 
         if (videoPlaylist != null)
         {
@@ -92,9 +94,9 @@ public partial class EditorVideoPlayerElement : VisualElement
                 return;
             }
 
-            for (int i = 0; i < viewModel.Videos.Count; i++)
+            for (int i = 0; i < ViewModel.Videos.Count; i++)
             {
-                var videoViewModel = viewModel.Videos[i];
+                var videoViewModel = ViewModel.Videos[i];
 
                 var itemRoot = playlistItemTemplate.templateSource.CloneTree();
                 var playListItemElement = itemRoot.Q<PlayListItemElement>();
@@ -119,48 +121,48 @@ public partial class EditorVideoPlayerElement : VisualElement
 
     public void Stop()
     {
-        viewModel.Videos[currentIndex].Pause();
-        viewModel.Pause();
+        ViewModel.Videos[currentIndex].Pause();
+        ViewModel.Pause();
         StopClicked?.Invoke(this);
     }
 
     public void Pause()
     {
-        viewModel.Videos[currentIndex].Pause();
-        viewModel.Pause();
+        ViewModel.Videos[currentIndex].Pause();
+        ViewModel.Pause();
         PauseClicked?.Invoke(this);
     }
 
     public void Next()
     {
-        if (viewModel.Videos == null || viewModel.Videos.Count == 0) return;
-        currentIndex = (currentIndex + 1) % viewModel.Videos.Count; //Return to 0 if it exceeds the count                                                                      
+        if (ViewModel.Videos == null || ViewModel.Videos.Count == 0) return;
+        currentIndex = (currentIndex + 1) % ViewModel.Videos.Count; //Return to 0 if it exceeds the count                                                                      
         Play();
 
     }
 
     public void Previous()
     {
-        if (viewModel.Videos == null || viewModel.Videos.Count == 0) return;
-        currentIndex = (currentIndex - 1 + viewModel.Videos.Count) % viewModel.Videos.Count; //Return to 0 if it exceeds the count        
-        viewModel.Videos[currentIndex].Play();
+        if (ViewModel.Videos == null || ViewModel.Videos.Count == 0) return;
+        currentIndex = (currentIndex - 1 + ViewModel.Videos.Count) % ViewModel.Videos.Count; //Return to 0 if it exceeds the count        
+        ViewModel.Videos[currentIndex].Play();
         Play();
     }
 
     public void Play()
     {
-        if (viewModel.Videos == null || viewModel.Videos.Count == 0)
+        if (ViewModel.Videos == null || ViewModel.Videos.Count == 0)
         {
             PlayClicked?.Invoke(this, "");
         }
         else
         {
-            viewModel.Videos.ForEach(a => a.ResetClipState());
+            ViewModel.Videos.ForEach(a => a.ResetClipState());
 
-            var videoToPlay = viewModel.Videos[currentIndex];
+            var videoToPlay = ViewModel.Videos[currentIndex];
             videoToPlay.Play();
-            viewModel.CurrentVideoTitle = videoToPlay.Title;
-            viewModel.Play();
+            ViewModel.CurrentVideoTitle = videoToPlay.Title;
+            ViewModel.Play();
             PlayClicked?.Invoke(this, videoToPlay.FilePath);
         }
 
