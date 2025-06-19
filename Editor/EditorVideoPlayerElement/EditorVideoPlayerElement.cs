@@ -132,8 +132,7 @@ public partial class EditorVideoPlayerElement : VisualElement
     }
 
     public void LoadPlayList(VideoPlaylist videoPlaylist)
-    {
-        this.dataSource = new EditorVideoPlayerElementVM();
+    {        
         this.playListVideosContainer.Clear();
 
         ViewModel.Init(videoPlaylist);
