@@ -35,7 +35,7 @@ public class EditorVideoPlayerHandler
 
         videoPlayer.loopPointReached += VideoPlayer_loopPointReached;
     }
-    
+
     private void VideoPlayer_loopPointReached(VideoPlayer source)
     {
         LoopPointReached?.Invoke(this, EventArgs.Empty);
@@ -96,9 +96,9 @@ public class EditorVideoPlayerHandler
             pausedFrame = -1;
         }
 
-        videoPlayer.Play();        
+        videoPlayer.Play();
     }
-    
+
     public void Destroy()
     {
         if (videoPlayer != null)
@@ -120,6 +120,14 @@ public class EditorVideoPlayerHandler
         if (audioSource != null)
         {
             audioSource.volume = volume;
+        }
+    }
+
+    internal void MuteUnmute()
+    {
+        if (audioSource != null)
+        {
+            audioSource.mute = !audioSource.mute;
         }
     }
 }

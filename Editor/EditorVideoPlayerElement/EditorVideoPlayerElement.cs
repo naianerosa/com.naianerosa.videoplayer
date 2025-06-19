@@ -20,6 +20,8 @@ public partial class EditorVideoPlayerElement : VisualElement
 
     public event ButtonClickHandler StopClicked;
 
+    public event ButtonClickHandler MuteUnmuteClicked;
+
     public delegate void VolumeChangedHandler(object sender, float volume);
     public event VolumeChangedHandler VolumeChanged;
 
@@ -33,6 +35,7 @@ public partial class EditorVideoPlayerElement : VisualElement
     private Button next => this.Q<Button>("next-button");
     private Button prev => this.Q<Button>("prev-button");
     private Button volume => this.Q<Button>("volume-button");
+    private Button mute => this.Q<Button>("mute-button");
 
     private Slider volumeSlider => this.Q<Slider>("volume-slider");
 
@@ -90,9 +93,16 @@ public partial class EditorVideoPlayerElement : VisualElement
         {
             image = EditorGUIUtility.IconContent(EditorVideoPlayerConstants.VolumeButtonIcon).image,
         });
+        volume.clicked += MuteUnmute;
+
+        mute.text = "";
+        mute.Add(new Image
+        {
+            image = EditorGUIUtility.IconContent(EditorVideoPlayerConstants.MuteButtonIcon).image,
+        });
+        mute.clicked += MuteUnmute;
 
         volumeSlider.RegisterValueChangedCallback<float>(VolumeSlider_ValueChanged);
-
     }
 
     private void VolumeSlider_ValueChanged(ChangeEvent<float> evt)
@@ -187,6 +197,12 @@ public partial class EditorVideoPlayerElement : VisualElement
             PlayClicked?.Invoke(this, videoToPlay.FilePath);
         }
 
+    }
+
+    public void MuteUnmute()
+    {
+        ViewModel.MuteUnMute();
+        MuteUnmuteClicked?.Invoke(this);
     }
 
     public void UpdateActiveVideoTime(double currentTime)

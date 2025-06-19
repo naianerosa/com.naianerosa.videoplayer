@@ -50,6 +50,13 @@ public class EditorVideoPlayerElementVM : ScriptableObject
     private float volume = 1f;
     public float Volume => volume;
 
+    [SerializeField]
+    private DisplayStyle volumeButtonVisibility = DisplayStyle.Flex;
+    public DisplayStyle VolumeButtonVisibility => volumeButtonVisibility;
+
+    [SerializeField]
+    private DisplayStyle muteButtonVisibility = DisplayStyle.None;
+    public DisplayStyle MuteButtonVisibility => muteButtonVisibility;
 
     public void Pause()
     {
@@ -61,6 +68,20 @@ public class EditorVideoPlayerElementVM : ScriptableObject
     {
         playButtonVisibility = DisplayStyle.None;
         pauseButtonVisibility = DisplayStyle.Flex;
+    }
+
+    public void MuteUnMute()
+    {
+        if (MuteButtonVisibility == DisplayStyle.Flex)
+        {
+            muteButtonVisibility = DisplayStyle.None;
+            volumeButtonVisibility = DisplayStyle.Flex;
+        }
+        else
+        {
+            muteButtonVisibility = DisplayStyle.Flex;
+            volumeButtonVisibility = DisplayStyle.None;
+        }
     }
 
     public void OnEnable()
