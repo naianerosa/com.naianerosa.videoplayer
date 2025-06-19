@@ -63,13 +63,20 @@ public class PlayListItemElementVM
         }
     }
 
-    public void Initialize(string title, string filePath, double videoTotalTime)
+    public PlayListItemElementVM()
+    {
+        this.title = "";
+        this.filePath = "";
+        this.VideoClipTotalTime = 0f;
+        this.VideoClipCurrentTime = 0f;
+    }
+
+    public PlayListItemElementVM(string title, string filePath, double videoTotalTime)
     {
         this.title = title;
         this.filePath = filePath;
         this.VideoClipTotalTime = videoTotalTime;
         this.VideoClipCurrentTime = 0f;
-        ResetClipState();
     }
 
     public void Pause()

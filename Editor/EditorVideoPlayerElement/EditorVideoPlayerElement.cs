@@ -135,7 +135,7 @@ public partial class EditorVideoPlayerElement : VisualElement
     {        
         this.playListVideosContainer.Clear();
 
-        ViewModel.Init(videoPlaylist);
+        ViewModel.LoadPlaylist(videoPlaylist);
 
         if (videoPlaylist != null)
         {
@@ -151,7 +151,7 @@ public partial class EditorVideoPlayerElement : VisualElement
 
                 var itemRoot = playlistItemTemplate.templateSource.CloneTree();
                 var playListItemElement = itemRoot.Q<PlayListItemElement>();
-                playListItemElement.Init(videoViewModel, i);
+                playListItemElement.Initialize(videoViewModel, i);
                 playListItemElement.PlayClicked += (sender, itemIndex) =>
                 {
                     currentIndex = itemIndex;

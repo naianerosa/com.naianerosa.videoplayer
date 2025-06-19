@@ -17,7 +17,7 @@ public partial class PlayListItemElement : VisualElement
     private Button pauseButton => this.Q<Button>("playlist-item-button-pause");
     public PlayListItemElement() { }
 
-    public void Init(PlayListItemElementVM viewModel, int index)
+    public void Initialize(PlayListItemElementVM viewModel, int index)
     {
         this.dataSource = viewModel;
 

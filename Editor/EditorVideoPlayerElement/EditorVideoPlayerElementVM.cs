@@ -86,7 +86,7 @@ public class EditorVideoPlayerElementVM
         }
     }
 
-    public void Init(VideoPlaylist playlist)
+    public void LoadPlaylist(VideoPlaylist playlist)
     {
         videos.Clear();
         if (playlist == null)
@@ -109,8 +109,7 @@ public class EditorVideoPlayerElementVM
             {
                 foreach (VideoClip video in playlist.Videos)
                 {
-                    var videoVM = new PlayListItemElementVM();
-                    videoVM.Initialize(video.name, video.originalPath, video.length);
+                    var videoVM = new PlayListItemElementVM(video.name, video.originalPath, video.length);
                     videos.Add(videoVM);
                 }
             }
