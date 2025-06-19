@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Video;
@@ -9,6 +10,8 @@ using UnityEngine.Video;
 public class EditorVideoPlayerHandler
 {
     public EventHandler LoopPointReached;
+    public double ActiveVideoTime => videoPlayer.time;
+
     private VideoPlayer videoPlayer;
     private IMGUIContainer videoDisplay;
     private RenderTexture renderTexture;
@@ -31,7 +34,7 @@ public class EditorVideoPlayerHandler
 
         videoPlayer.loopPointReached += VideoPlayer_loopPointReached;
     }
-
+    
     private void VideoPlayer_loopPointReached(VideoPlayer source)
     {
         LoopPointReached?.Invoke(this, EventArgs.Empty);
@@ -92,8 +95,9 @@ public class EditorVideoPlayerHandler
             pausedFrame = -1;
         }
 
-        videoPlayer.Play();
+        videoPlayer.Play();        
     }
+    
     public void Destroy()
     {
         if (videoPlayer != null)

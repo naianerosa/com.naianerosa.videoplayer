@@ -25,14 +25,6 @@ public class EditorVideoPlayerElementVM : ScriptableObject
     public DisplayStyle PauseButtonVisibility => pauseButtonVisibility;
 
     [SerializeField]
-    private string currentVideoTitle;
-    public string CurrentVideoTitle
-    {
-        get => currentVideoTitle;
-        set => currentVideoTitle = value;
-    }
-
-    [SerializeField]
     private DisplayStyle noVideosLabelVisibility = DisplayStyle.None;
     public DisplayStyle NoVideosLabelVisibility => noVideosLabelVisibility;
 
@@ -45,6 +37,15 @@ public class EditorVideoPlayerElementVM : ScriptableObject
 
     public List<PlayListItemElementVM> Videos => videos;
 
+    [SerializeField]
+    private PlayListItemElementVM activeVideo = null;
+
+    public PlayListItemElementVM ActiveVideo
+    {
+        get => activeVideo;
+        set => activeVideo = value;
+    }
+
     public void Pause()
     {
         playButtonVisibility = DisplayStyle.Flex;
@@ -55,6 +56,11 @@ public class EditorVideoPlayerElementVM : ScriptableObject
     {
         playButtonVisibility = DisplayStyle.None;
         pauseButtonVisibility = DisplayStyle.Flex;
+    }
+
+    public void OnEnable()
+    {
+        activeVideo = ScriptableObject.CreateInstance<PlayListItemElementVM>();
     }
 
     public void Init(VideoPlaylist playlist)
@@ -81,11 +87,13 @@ public class EditorVideoPlayerElementVM : ScriptableObject
                 foreach (VideoClip video in playlist.Videos)
                 {
                     var videoVM = ScriptableObject.CreateInstance<PlayListItemElementVM>();
-                    videoVM.Initialize(video.name, video.originalPath);
+                    videoVM.Initialize(video.name, video.originalPath, video.length);
                     videos.Add(videoVM);
                 }
             }
         }
+
+        ActiveVideo = Videos.Count > 0 ? Videos[0] : null;
     }
 }
 

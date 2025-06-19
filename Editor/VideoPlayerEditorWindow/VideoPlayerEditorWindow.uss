@@ -32,10 +32,11 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
-    bottom: 10%;
+    bottom: 5%;
     position: absolute;
     height: auto;
-    visibility: hidden;
+     visibility: hidden;
+    /* background-color: gray; */
 }
 
 .video-container:hover > .video-controls {

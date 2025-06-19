@@ -17,3 +17,5 @@ MonoBehaviour:
   PauseButtonVisibility: 1
   FilePath: somevideo.webm
   TitleFontStyle: 0
+  VideoClipTotalTime: 50
+  VideoClipCurrentTime: 10

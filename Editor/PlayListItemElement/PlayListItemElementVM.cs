@@ -32,10 +32,45 @@ public class PlayListItemElementVM : ScriptableObject
     private FontStyle titleFontStyle = FontStyle.Normal;
     public FontStyle TitleFontStyle => titleFontStyle;
 
-    public void Initialize(string title, string filePath)
+    [SerializeField]
+    private string videoClipTotalTimeFormatted;
+    [SerializeField]
+    private double videoClipTotalTime = 0f;
+    public double VideoClipTotalTime
+    {
+        get => videoClipTotalTime;
+        set
+        {
+            videoClipTotalTime = value;
+            int minutes = (int)(videoClipTotalTime / 60);
+            int seconds = (int)(videoClipTotalTime % 60);
+            videoClipTotalTimeFormatted = $"{minutes:D2}:{seconds:D2}";
+        }
+    }
+
+    [SerializeField]
+    private string videoClipCurrentTimeFormatted;
+
+    [SerializeField]
+    private double videoClipCurrentTime = 0f;
+    public double VideoClipCurrentTime
+    {
+        get => videoClipCurrentTime;
+        set
+        {
+            videoClipCurrentTime = value;
+            int minutes = (int)(videoClipCurrentTime / 60);
+            int seconds = (int)(videoClipCurrentTime % 60);
+            videoClipCurrentTimeFormatted = $"{minutes:D2}:{seconds:D2}";
+        }
+    }
+
+    public void Initialize(string title, string filePath, double videoTotalTime)
     {
         this.title = title;
         this.filePath = filePath;
+        this.VideoClipTotalTime = videoTotalTime;
+        this.VideoClipCurrentTime = 0f;
         ResetClipState();
     }
 

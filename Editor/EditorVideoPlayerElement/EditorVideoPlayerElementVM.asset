@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e4aa4975ec33b545bfbfe3c982427f2, type: 3}
   m_Name: EditorVideoPlayerElementVM
   m_EditorClassIdentifier: 
-  Title: My Awesome Playlist
-  PlayButtonVisibility: 0
-  PauseButtonVisibility: 0
-  CurrentVideoTitle: 
-  NoVideosLabelVisibility: 1
-  VideoContainerVisibility: 0
-  Videos:
-  - {fileID: 11400000, guid: 0d1320cecdbf35e41a6725c26609c027, type: 2}
-  - {fileID: 11400000, guid: 0d1320cecdbf35e41a6725c26609c027, type: 2}
+  title: 
+  playButtonVisibility: 0
+  pauseButtonVisibility: 0
+  noVideosLabelVisibility: 1
+  videoContainerVisibility: 0
+  videos: []
+  activeVideo: {fileID: 0}

@@ -1,4 +1,4 @@
-﻿using System.Runtime.CompilerServices;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -161,10 +161,16 @@ public partial class EditorVideoPlayerElement : VisualElement
 
             var videoToPlay = ViewModel.Videos[currentIndex];
             videoToPlay.Play();
-            ViewModel.CurrentVideoTitle = videoToPlay.Title;
+            ViewModel.ActiveVideo = videoToPlay;
             ViewModel.Play();
             PlayClicked?.Invoke(this, videoToPlay.FilePath);
         }
 
     }
+
+    public void UpdateActiveVideoTime(double currentTime)
+    {
+        ViewModel.ActiveVideo.VideoClipCurrentTime = currentTime;
+    }
+
 }

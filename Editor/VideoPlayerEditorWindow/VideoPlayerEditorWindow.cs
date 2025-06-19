@@ -14,7 +14,6 @@ public class VideoPlayerEditorWindow : EditorWindow
     private VisualTreeAsset visualTreeAsset = default;
     private EditorVideoPlayerHandler videoPlayerHandler;
 
-
     private EditorVideoPlayerElement editorVideoPlayerElement;
     internal EditorVideoPlayerElement EditorVideoPlayerElement => editorVideoPlayerElement;
 
@@ -60,6 +59,12 @@ public class VideoPlayerEditorWindow : EditorWindow
 
         //Improve Video frame rate in the editor
         EditorApplication.update += Repaint;
+    }
+
+
+    public void Update()
+    {
+        editorVideoPlayerElement.UpdateActiveVideoTime(videoPlayerHandler.ActiveVideoTime);
     }
 
     private void VideoPlayerHandler_LoopPointReached(object sender, System.EventArgs e)

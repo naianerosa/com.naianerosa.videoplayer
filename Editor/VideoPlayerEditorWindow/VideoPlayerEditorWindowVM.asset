@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14284c7a1f618142a13bbf4cb444a24, type: 3}
   m_Name: VideoPlayerEditorWindowVM
   m_EditorClassIdentifier: 
-  NoPlayListSelectedContainer: 0
+  NoPlayListSelectedContainer: 1

@@ -16,11 +16,32 @@
         <ui:VisualElement name="videos-elements" style="flex-grow: 1;">
             <ui:VisualElement name="video-container" class="video-container">
                 <ui:IMGUIContainer name="video-display" class="video-display" />
-                <ui:VisualElement name="video-controls" class="video-controls" style="flex-direction: column; align-items: center;">
+                <ui:VisualElement name="video-controls" class="video-controls" style="flex-direction: column; align-items: center; width: 516px;">
                     <ui:VisualElement name="video-controls-title" style="flex-grow: 1; align-items: center; margin-bottom: 6px;">
-                        <ui:Label text="Label" style="-unity-font-style: bold; font-size: 18px; -unity-text-align: middle-center;">
+                        <ui:Label text="Default Video Title" parse-escape-sequences="false" style="-unity-font-style: bold; font-size: 18px; -unity-text-align: middle-center;">
                             <Bindings>
-                                <ui:DataBinding property="text" data-source-path="currentVideoTitle" binding-mode="ToTarget" />
+                                <ui:DataBinding property="text" data-source-path="activeVideo.title" binding-mode="ToTarget" />
+                            </Bindings>
+                        </ui:Label>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="video-time-tracker-container" enabled="false" class="video-time-tracker-container" style="flex-grow: 1; align-items: center; margin-bottom: 0; width: 100%;">
+                        <ui:Slider value="42" high-value="100" name="video-time-tracker" style="width: 100%;">
+                            <Bindings>
+                                <ui:DataBinding property="highValue" data-source-path="activeVideo.videoClipTotalTime" binding-mode="ToTarget" />
+                                <ui:DataBinding property="value" data-source-path="activeVideo.videoClipCurrentTime" binding-mode="TwoWay" />
+                            </Bindings>
+                        </ui:Slider>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="video-time-labels" style="flex-grow: 1; flex-direction: row; font-size: 10px; align-self: center; align-items: center; margin-bottom: 6px;">
+                        <ui:Label text="Label" name="video-time-current-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                            <Bindings>
+                                <ui:DataBinding property="text" data-source-path="activeVideo.videoClipCurrentTimeFormatted" binding-mode="ToTarget" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:Label text="/" name="video-time-separator-label" style="padding-top: 4px; padding-right: 2px; padding-bottom: 4px; padding-left: 1px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                        <ui:Label text="Label" name="video-time-total-label" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                            <Bindings>
+                                <ui:DataBinding property="text" data-source-path="activeVideo.videoClipTotalTimeFormatted" binding-mode="ToTarget" />
                             </Bindings>
                         </ui:Label>
                     </ui:VisualElement>
