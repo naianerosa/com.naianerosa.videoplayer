@@ -58,6 +58,10 @@ public class EditorVideoPlayerElementVM : ScriptableObject
     private DisplayStyle muteButtonVisibility = DisplayStyle.None;
     public DisplayStyle MuteButtonVisibility => muteButtonVisibility;
 
+    [SerializeField]
+    private int playbackSpeedIndex = 1;
+    public int PlaybackSpeedIndex => playbackSpeedIndex;
+
     public void Pause()
     {
         playButtonVisibility = DisplayStyle.Flex;

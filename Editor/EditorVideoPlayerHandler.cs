@@ -130,4 +130,12 @@ public class EditorVideoPlayerHandler
             audioSource.mute = !audioSource.mute;
         }
     }
+
+    internal void SetPlaybackSpeed(float playbackSpeedFactor)
+    {
+        if (videoPlayer != null)
+        {
+            videoPlayer.playbackSpeed = playbackSpeedFactor;
+        }
+    }
 }

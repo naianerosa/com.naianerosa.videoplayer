@@ -58,9 +58,15 @@ public class VideoPlayerEditorWindow : EditorWindow
         editorVideoPlayerElement.StopClicked += EditorVideoPlayerElement_StopClicked;
         editorVideoPlayerElement.VolumeChanged += EditorVideoPlayerElement_VolumeChanged;
         editorVideoPlayerElement.MuteUnmuteClicked += EditorVideoPlayerElement_MuteUnmuteClicked;
+        editorVideoPlayerElement.PlaybackSpeedChanged += EditorVideoPlayerElement_PlaybackSpeedChanged;
 
         //Improve Video frame rate in the editor
         EditorApplication.update += Repaint;
+    }
+
+    private void EditorVideoPlayerElement_PlaybackSpeedChanged(object sender, float playbackSpeedFactor)
+    {
+        videoPlayerHandler.SetPlaybackSpeed(playbackSpeedFactor);
     }
 
     private void EditorVideoPlayerElement_MuteUnmuteClicked(object sender)
@@ -70,7 +76,7 @@ public class VideoPlayerEditorWindow : EditorWindow
 
     private void EditorVideoPlayerElement_VolumeChanged(object sender, float volume)
     {
-       videoPlayerHandler.SetVolume(volume);
+        videoPlayerHandler.SetVolume(volume);
     }
 
     public void Update()
@@ -106,6 +112,7 @@ public class VideoPlayerEditorWindow : EditorWindow
         videoPlayerHandler.LoopPointReached -= VideoPlayerHandler_LoopPointReached;
         editorVideoPlayerElement.VolumeChanged += EditorVideoPlayerElement_VolumeChanged;
         editorVideoPlayerElement.MuteUnmuteClicked -= EditorVideoPlayerElement_MuteUnmuteClicked;
+        editorVideoPlayerElement.PlaybackSpeedChanged -= EditorVideoPlayerElement_PlaybackSpeedChanged;
 
         videoPlayerHandler.Destroy();
     }

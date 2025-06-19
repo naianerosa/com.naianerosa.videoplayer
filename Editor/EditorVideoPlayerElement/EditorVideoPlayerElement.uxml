@@ -38,7 +38,7 @@
                         </ui:Button>
                         <ui:Button text="S" name="stop-button" class="button" />
                         <ui:Button text="&gt;&#10;" name="next-button" display-tooltip-when-elided="false" class="button" />
-                        <ui:VisualElement name="volume-container" class="volume-container" style="flex-direction: row; position: absolute; right: 0;">
+                        <ui:VisualElement name="right-side-container" class="volume-container" style="flex-direction: row; position: absolute; right: 0;">
                             <ui:Button text="V" name="volume-button" class="button volume-button">
                                 <Bindings>
                                     <ui:DataBinding property="style.display" data-source-path="volumeButtonVisibility" binding-mode="ToTarget" />
@@ -54,6 +54,7 @@
                                     <ui:DataBinding property="value" data-source-path="volume" binding-mode="TwoWay" />
                                 </Bindings>
                             </ui:Slider>
+                            <ui:DropdownField choices="0.5x,1x,1.5x,2" index="1" name="video-speed-dropdown" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="video-time-tracker-container" enabled="false" class="video-time-tracker-container" style="flex-grow: 1; align-items: flex-start; margin-bottom: 0; width: 100%; display: flex;">

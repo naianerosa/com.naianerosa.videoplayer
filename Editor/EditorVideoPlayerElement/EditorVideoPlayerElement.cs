@@ -25,6 +25,9 @@ public partial class EditorVideoPlayerElement : VisualElement
     public delegate void VolumeChangedHandler(object sender, float volume);
     public event VolumeChangedHandler VolumeChanged;
 
+    public delegate void PlaybackSpeedChangedHandler(object sender, float playbackSpeedFactor);
+    public event PlaybackSpeedChangedHandler PlaybackSpeedChanged;
+
     public IMGUIContainer videoDisplay => this.Q<IMGUIContainer>("video-display");
 
     internal EditorVideoPlayerElementVM ViewModel => this.dataSource as EditorVideoPlayerElementVM;
@@ -44,6 +47,7 @@ public partial class EditorVideoPlayerElement : VisualElement
     private TemplateContainer playlistItemTemplate;
     private int currentIndex = 0;
 
+    private DropdownField playbackSpeed => this.Q<DropdownField>("video-speed-dropdown");
     public EditorVideoPlayerElement() { }
 
     public void Init()
@@ -103,6 +107,22 @@ public partial class EditorVideoPlayerElement : VisualElement
         mute.clicked += MuteUnmute;
 
         volumeSlider.RegisterValueChangedCallback<float>(VolumeSlider_ValueChanged);
+
+        playbackSpeed.RegisterValueChangedCallback<string>(PlaybackSpeed_ValueChanged);
+    }
+
+    private void PlaybackSpeed_ValueChanged(ChangeEvent<string> evt)
+    {
+        if (float.TryParse(evt.newValue.Replace("x", ""), out float playbackSpeedFactor))
+        {
+            PlaybackSpeedChanged?.Invoke(this, playbackSpeedFactor);
+        }
+        else
+        {
+            Debug.LogError($"Invalid playback speed value: {evt.newValue}");
+            return;
+        }
+
     }
 
     private void VolumeSlider_ValueChanged(ChangeEvent<float> evt)
