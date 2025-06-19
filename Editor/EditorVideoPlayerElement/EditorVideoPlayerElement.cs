@@ -52,7 +52,7 @@ public partial class EditorVideoPlayerElement : VisualElement
 
     public void Init()
     {
-        this.dataSource = ScriptableObject.CreateInstance<EditorVideoPlayerElementVM>();
+        this.dataSource = new EditorVideoPlayerElementVM();
 
         this.playlistItemTemplate = this.Q<TemplateContainer>("playlist-item").templateSource.CloneTree();
 
@@ -132,7 +132,7 @@ public partial class EditorVideoPlayerElement : VisualElement
 
     public void LoadPlayList(VideoPlaylist videoPlaylist)
     {
-        this.dataSource = ScriptableObject.CreateInstance<EditorVideoPlayerElementVM>();
+        this.dataSource = new EditorVideoPlayerElementVM();
         this.playListVideosContainer.Clear();
 
         ViewModel.Init(videoPlaylist);

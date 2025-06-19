@@ -35,7 +35,7 @@ public class VideoPlayerEditorWindow : EditorWindow
         VisualElement root = rootVisualElement;
         root.Add(visualTreeAsset.Instantiate());
 
-        ViewModel = ScriptableObject.CreateInstance<VideoPlayerEditorWindowVM>();
+        ViewModel = new VideoPlayerEditorWindowVM();
 
         this.editorVideoPlayerElement = root.Q<EditorVideoPlayerElement>();
         editorVideoPlayerElement.Init();

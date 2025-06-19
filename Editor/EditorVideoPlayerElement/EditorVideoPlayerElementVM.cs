@@ -7,10 +7,8 @@ using UnityEngine.Video;
 /// ViewModel for the <see cref="EditorVideoPlayerElement"/>.
 /// The view model contain all the properties that are binded to the UI elements 
 /// and some methods to control the video player state.
-/// This view model was created as a ScriptableObject to allow for easy experiments in the UI Builder.
 /// </summary>
-//[CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/EditorVideoPlayerElementVM")]
-public class EditorVideoPlayerElementVM : ScriptableObject
+public class EditorVideoPlayerElementVM
 {
     [SerializeField]
     private string title;
@@ -90,7 +88,7 @@ public class EditorVideoPlayerElementVM : ScriptableObject
 
     public void OnEnable()
     {
-        activeVideo = ScriptableObject.CreateInstance<PlayListItemElementVM>();
+        activeVideo = new PlayListItemElementVM();
     }
 
     public void Init(VideoPlaylist playlist)
@@ -116,14 +114,14 @@ public class EditorVideoPlayerElementVM : ScriptableObject
             {
                 foreach (VideoClip video in playlist.Videos)
                 {
-                    var videoVM = ScriptableObject.CreateInstance<PlayListItemElementVM>();
+                    var videoVM = new PlayListItemElementVM();
                     videoVM.Initialize(video.name, video.originalPath, video.length);
                     videos.Add(videoVM);
                 }
             }
         }
 
-        ActiveVideo = Videos.Count > 0 ? Videos[0] : ScriptableObject.CreateInstance<PlayListItemElementVM>();
+        ActiveVideo = Videos.Count > 0 ? Videos[0] : new PlayListItemElementVM();
     }
 }
 

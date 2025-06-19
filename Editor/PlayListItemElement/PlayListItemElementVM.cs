@@ -7,10 +7,8 @@ using UnityEngine.UIElements;
 /// ViewModel for the <see cref="PlayListItemElement"/>.
 /// The view model contain all the properties that are binded to the UI elements 
 /// and some methods to control the playlist item state.
-/// This view model was created as a ScriptableObject to allow for easy experiments in the UI Builder.
 /// </summary>
-//[CreateAssetMenu(fileName = "VideoPlaylist", menuName = "Video Player/PlayListItemElementVM")]
-public class PlayListItemElementVM : ScriptableObject
+public class PlayListItemElementVM
 {
     [SerializeField]
     private string title;

@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Packages/com.naianerosa.videoplayer/Editor/VideoPlayerEditorWindow/VideoPlayerEditorWindow.uss?fileID=7433441132597879392&amp;guid=0d19bbabcac07074a869e0e4e7e37784&amp;type=3#VideoPlayerEditorWindow" />
-    <PlayListItemElement name="playlist-item" data-source="project://database/Packages/com.naianerosa.videoplayer/Editor/PlayListItemElement/PlayListItemElementVM.asset?fileID=11400000&amp;guid=0d1320cecdbf35e41a6725c26609c027&amp;type=2#PlayListItemElementVM" class="playlist-item">
+    <PlayListItemElement name="playlist-item" data-source-type="PlayListItemElementVM, VideoPlayer.Editor" class="playlist-item">
         <ui:VisualElement name="playlist-item-label-container" style="flex-grow: 1;">
             <ui:ProgressBar value="22" name="ProgressBar" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-grow: 1; position: absolute; width: 100%;">
                 <Bindings>
@@ -20,7 +20,7 @@
                 <ui:DataBinding property="style.display" data-source-path="playButtonVisibility" binding-mode="ToTarget" />
             </Bindings>
         </ui:Button>
-        <ui:Button name="playlist-item-button-pause" text="P" class="button">
+        <ui:Button name="playlist-item-button-pause" text="P" class="button" style="display: none;">
             <Bindings>
                 <ui:DataBinding property="style.display" data-source-path="pauseButtonVisibility" binding-mode="ToTarget" />
             </Bindings>
