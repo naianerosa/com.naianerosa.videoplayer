@@ -8,12 +8,6 @@
     margin-top: 8px;
 }
 
-.playlist-picker-container {
-    flex-grow: 1;
-    flex-direction: row;
-    margin-bottom: 8px;
-}
-
 .video-container {
     flex-grow: 0;
     align-items: center;
@@ -35,7 +29,7 @@
     bottom: 2px;
     position: absolute;
     height: auto;
-    visibility:hidden;
+    visibility: hidden;
 }
 
 .video-container:hover > .video-controls {
@@ -91,4 +85,8 @@
     margin-bottom: 0;
 }
 
-
+.playlist-picker-container {
+    flex-grow: 1;
+    flex-direction: row;
+    margin-bottom: 8px;
+}

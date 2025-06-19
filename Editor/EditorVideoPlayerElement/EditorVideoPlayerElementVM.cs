@@ -36,7 +36,7 @@ public class EditorVideoPlayerElementVM
     public List<PlayListItemElementVM> Videos => videos;
 
     [SerializeField]
-    private PlayListItemElementVM activeVideo = null;
+    private PlayListItemElementVM activeVideo = new PlayListItemElementVM();
 
     public PlayListItemElementVM ActiveVideo
     {
@@ -84,11 +84,6 @@ public class EditorVideoPlayerElementVM
             muteButtonVisibility = DisplayStyle.Flex;
             volumeButtonVisibility = DisplayStyle.None;
         }
-    }
-
-    public void OnEnable()
-    {
-        activeVideo = new PlayListItemElementVM();
     }
 
     public void Init(VideoPlaylist playlist)

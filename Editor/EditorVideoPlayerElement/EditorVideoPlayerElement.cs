@@ -55,6 +55,7 @@ public partial class EditorVideoPlayerElement : VisualElement
         this.dataSource = new EditorVideoPlayerElementVM();
 
         this.playlistItemTemplate = this.Q<TemplateContainer>("playlist-item").templateSource.CloneTree();
+        this.playListVideosContainer.Clear();
 
         play.text = "";
         play.Add(new Image
