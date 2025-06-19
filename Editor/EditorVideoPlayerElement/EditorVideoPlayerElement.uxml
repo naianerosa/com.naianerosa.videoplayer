@@ -14,10 +14,10 @@
             </Bindings>
         </ui:VisualElement>
         <ui:VisualElement name="videos-elements" style="flex-grow: 1;">
-            <ui:VisualElement name="video-container" class="video-container">
+            <ui:VisualElement name="video-container" class="video-container" style="flex-grow: 1; min-height: 290px;">
                 <ui:IMGUIContainer name="video-display" class="video-display" />
                 <ui:VisualElement name="video-controls" class="video-controls" style="flex-direction: column; align-items: center; width: 516px;">
-                    <ui:VisualElement name="video-controls-title" style="flex-grow: 1; align-items: center; margin-bottom: 6px;">
+                    <ui:VisualElement name="video-controls-title" tooltip="Video Title" style="flex-grow: 1; align-items: center; margin-bottom: 6px;">
                         <ui:Label text="Default Video Title" parse-escape-sequences="false" style="-unity-font-style: bold; font-size: 18px; -unity-text-align: middle-center;">
                             <Bindings>
                                 <ui:DataBinding property="text" data-source-path="activeVideo.title" binding-mode="ToTarget" />
@@ -25,40 +25,40 @@
                         </ui:Label>
                     </ui:VisualElement>
                     <ui:VisualElement name="video-controls-button" style="flex-grow: 1; flex-direction: row; width: 100%; justify-content: flex-start;">
-                        <ui:Button text="&lt;" name="prev-button" class="button" />
-                        <ui:Button text="P" name="play-button" class="button">
+                        <ui:Button text="&lt;" name="prev-button" tooltip="Previous" class="button" />
+                        <ui:Button text="P" name="play-button" tooltip="Play" class="button">
                             <Bindings>
                                 <ui:DataBinding property="style.display" data-source-path="playButtonVisibility" binding-mode="ToTarget" />
                             </Bindings>
                         </ui:Button>
-                        <ui:Button text="PA" name="pause-button" class="button">
+                        <ui:Button text="PA" name="pause-button" tooltip="Pause" class="button">
                             <Bindings>
                                 <ui:DataBinding property="style.display" data-source-path="pauseButtonVisibility" binding-mode="ToTarget" />
                             </Bindings>
                         </ui:Button>
-                        <ui:Button text="S" name="stop-button" class="button" />
-                        <ui:Button text="&gt;&#10;" name="next-button" display-tooltip-when-elided="false" class="button" />
+                        <ui:Button text="S" name="stop-button" tooltip="Stop" class="button" />
+                        <ui:Button text="&gt;&#10;" name="next-button" display-tooltip-when-elided="false" tooltip="Next" class="button" />
                         <ui:VisualElement name="right-side-container" class="volume-container" style="flex-direction: row; position: absolute; right: 0;">
-                            <ui:Button text="V" name="volume-button" class="button volume-button">
+                            <ui:Button text="V" name="volume-button" tooltip="Mute" class="button volume-button">
                                 <Bindings>
                                     <ui:DataBinding property="style.display" data-source-path="volumeButtonVisibility" binding-mode="ToTarget" />
                                 </Bindings>
                             </ui:Button>
-                            <ui:Button text="M" name="mute-button" parse-escape-sequences="false" class="button volume-button">
+                            <ui:Button text="M" name="mute-button" parse-escape-sequences="false" tooltip="Unmute" class="button volume-button">
                                 <Bindings>
                                     <ui:DataBinding property="style.display" data-source-path="muteButtonVisibility" binding-mode="ToTarget" />
                                 </Bindings>
                             </ui:Button>
-                            <ui:Slider value="0.5" high-value="1" name="volume-slider" direction="Horizontal" class="volume-slider" style="width: 90px;">
+                            <ui:Slider value="0.5" high-value="1" name="volume-slider" direction="Horizontal" tooltip="Volume" class="volume-slider" style="width: 90px;">
                                 <Bindings>
                                     <ui:DataBinding property="value" data-source-path="volume" binding-mode="TwoWay" />
                                 </Bindings>
                             </ui:Slider>
-                            <ui:DropdownField choices="0.5x,1x,1.5x,2" index="1" name="video-speed-dropdown" />
+                            <ui:DropdownField choices="0.5x,1x,1.5x,2" index="1" name="video-speed-dropdown" tooltip="Playback Speed" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="video-time-tracker-container" enabled="false" class="video-time-tracker-container" style="flex-grow: 1; align-items: flex-start; margin-bottom: 0; width: 100%; display: flex;">
-                        <ui:ProgressBar value="22" style="width: 100%; position: absolute; padding-right: 7px;">
+                        <ui:ProgressBar value="22" tooltip="Video Progress" style="width: 100%; position: absolute; padding-right: 7px;">
                             <Bindings>
                                 <ui:DataBinding property="highValue" data-source-path="activeVideo.videoClipTotalTime" binding-mode="ToTarget" />
                                 <ui:DataBinding property="value" data-source-path="activeVideo.videoClipCurrentTime" binding-mode="ToTarget" />
@@ -71,13 +71,13 @@
                             </Bindings>
                         </ui:Slider>
                         <ui:VisualElement name="video-time-labels" class="video-time-labels" style="flex-grow: 1; flex-direction: row; font-size: 10px; align-self: center; align-items: center; margin-bottom: 0; margin-top: 0; margin-right: 0; margin-left: 0;">
-                            <ui:Label text="Label" name="video-time-current-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                            <ui:Label text="Label" name="video-time-current-label" tooltip="Video Current Time" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
                                 <Bindings>
                                     <ui:DataBinding property="text" data-source-path="activeVideo.videoClipCurrentTimeFormatted" binding-mode="ToTarget" />
                                 </Bindings>
                             </ui:Label>
                             <ui:Label text="/" name="video-time-separator-label" style="padding-top: 4px; padding-right: 2px; padding-bottom: 4px; padding-left: 1px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
-                            <ui:Label text="Label" name="video-time-total-label" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                            <ui:Label text="Label" name="video-time-total-label" tooltip="Video Total Time" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
                                 <Bindings>
                                     <ui:DataBinding property="text" data-source-path="activeVideo.videoClipTotalTimeFormatted" binding-mode="ToTarget" />
                                 </Bindings>
@@ -86,7 +86,7 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:Label text="Label" name="playlist-label" class="playlist-label" style="-unity-text-align: upper-center;">
+            <ui:Label text="My Playlist" name="playlist-label" class="playlist-label" style="-unity-text-align: upper-center;">
                 <Bindings>
                     <ui:DataBinding property="text" data-source-path="title" binding-mode="ToTarget" />
                 </Bindings>
