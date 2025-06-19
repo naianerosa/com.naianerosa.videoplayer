@@ -46,6 +46,11 @@ public class EditorVideoPlayerElementVM : ScriptableObject
         set => activeVideo = value;
     }
 
+    [SerializeField]
+    private float volume = 1f;
+    public float Volume => volume;
+
+
     public void Pause()
     {
         playButtonVisibility = DisplayStyle.Flex;

@@ -18,4 +18,4 @@ MonoBehaviour:
   noVideosLabelVisibility: 1
   videoContainerVisibility: 0
   videos: []
-  activeVideo: {fileID: 0}
+  activeVideo: {fileID: 11400000, guid: 0d1320cecdbf35e41a6725c26609c027, type: 2}

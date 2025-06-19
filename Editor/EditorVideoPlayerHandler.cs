@@ -16,6 +16,7 @@ public class EditorVideoPlayerHandler
     private IMGUIContainer videoDisplay;
     private RenderTexture renderTexture;
     private long pausedFrame = -1;
+    private AudioSource audioSource;
 
     public EditorVideoPlayerHandler(IMGUIContainer videoDisplay)
     {
@@ -25,7 +26,7 @@ public class EditorVideoPlayerHandler
         go.hideFlags = HideFlags.HideAndDontSave;
         videoPlayer = go.GetComponent<VideoPlayer>();
         videoPlayer.playOnAwake = false;
-        AudioSource audioSource = videoPlayer.gameObject.AddComponent<AudioSource>();
+        audioSource = videoPlayer.gameObject.AddComponent<AudioSource>();
         videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
         videoPlayer.controlledAudioTrackCount = 1;
         videoPlayer.SetTargetAudioSource(0, audioSource);
@@ -111,6 +112,14 @@ public class EditorVideoPlayerHandler
         {
             GameObject.DestroyImmediate(renderTexture);
             renderTexture = null;
+        }
+    }
+
+    public void SetVolume(float volume)
+    {
+        if (audioSource != null)
+        {
+            audioSource.volume = volume;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
@@ -19,6 +20,9 @@ public partial class EditorVideoPlayerElement : VisualElement
 
     public event ButtonClickHandler StopClicked;
 
+    public delegate void VolumeChangedHandler(object sender, float volume);
+    public event VolumeChangedHandler VolumeChanged;
+
     public IMGUIContainer videoDisplay => this.Q<IMGUIContainer>("video-display");
 
     internal EditorVideoPlayerElementVM ViewModel => this.dataSource as EditorVideoPlayerElementVM;
@@ -28,6 +32,9 @@ public partial class EditorVideoPlayerElement : VisualElement
     private Button stop => this.Q<Button>("stop-button");
     private Button next => this.Q<Button>("next-button");
     private Button prev => this.Q<Button>("prev-button");
+    private Button volume => this.Q<Button>("volume-button");
+
+    private Slider volumeSlider => this.Q<Slider>("volume-slider");
 
     private ScrollView playListVideosContainer => this.Q<ScrollView>("playlist");
 
@@ -77,6 +84,20 @@ public partial class EditorVideoPlayerElement : VisualElement
         });
 
         prev.clicked += Previous;
+
+        volume.text = "";
+        volume.Add(new Image
+        {
+            image = EditorGUIUtility.IconContent(EditorVideoPlayerConstants.VolumeButtonIcon).image,
+        });
+
+        volumeSlider.RegisterValueChangedCallback<float>(VolumeSlider_ValueChanged);
+
+    }
+
+    private void VolumeSlider_ValueChanged(ChangeEvent<float> evt)
+    {
+        VolumeChanged?.Invoke(this, evt.newValue);
     }
 
     public void LoadPlayList(VideoPlaylist videoPlaylist)
@@ -172,5 +193,6 @@ public partial class EditorVideoPlayerElement : VisualElement
     {
         ViewModel.ActiveVideo.VideoClipCurrentTime = currentTime;
     }
+
 
 }

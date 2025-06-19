@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a7d83f2f1ce5f408e23b52a751f85a, type: 3}
   m_Name: PlayListItemElementVM
   m_EditorClassIdentifier: 
-  Title: Video 1
-  PlayButtonVisibility: 0
-  PauseButtonVisibility: 1
-  FilePath: somevideo.webm
-  TitleFontStyle: 0
-  VideoClipTotalTime: 50
-  VideoClipCurrentTime: 10
+  title: Video Title 001
+  playButtonVisibility: 0
+  pauseButtonVisibility: 1
+  filePath: 
+  titleFontStyle: 0
+  videoClipTotalTimeFormatted: 05:00
+  videoClipTotalTime: 0
+  videoClipCurrentTimeFormatted: 00:00
+  videoClipCurrentTime: 0

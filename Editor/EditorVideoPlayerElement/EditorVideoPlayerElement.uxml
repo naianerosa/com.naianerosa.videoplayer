@@ -24,7 +24,7 @@
                             </Bindings>
                         </ui:Label>
                     </ui:VisualElement>
-                    <ui:VisualElement name="video-controls-button" style="flex-grow: 1; flex-direction: row;">
+                    <ui:VisualElement name="video-controls-button" style="flex-grow: 1; flex-direction: row; width: 100%; justify-content: flex-start;">
                         <ui:Button text="&lt;" name="prev-button" class="button" />
                         <ui:Button text="P" name="play-button" class="button">
                             <Bindings>
@@ -37,10 +37,14 @@
                             </Bindings>
                         </ui:Button>
                         <ui:Button text="S" name="stop-button" class="button" />
-                        <ui:Button text="&gt;&#10;" name="next-button" class="button" />
+                        <ui:Button text="&gt;&#10;" name="next-button" display-tooltip-when-elided="false" class="button" />
+                        <ui:VisualElement name="volume-container" class="volume-container" style="flex-direction: row; position: absolute; right: 0;">
+                            <ui:Button text="V" name="volume-button" class="button volume-button" />
+                            <ui:Slider value="0.5" high-value="1" name="volume-slider" direction="Horizontal" class="volume-slider" style="width: 90px;" />
+                        </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="video-time-tracker-container" enabled="false" class="video-time-tracker-container" style="flex-grow: 1; align-items: flex-start; margin-bottom: 0; width: 100%; display: flex;">
-                        <ui:ProgressBar value="22" style="width: 100%; position: absolute;">
+                        <ui:ProgressBar value="22" style="width: 100%; position: absolute; padding-right: 7px;">
                             <Bindings>
                                 <ui:DataBinding property="highValue" data-source-path="activeVideo.videoClipTotalTime" binding-mode="ToTarget" />
                                 <ui:DataBinding property="value" data-source-path="activeVideo.videoClipCurrentTime" binding-mode="ToTarget" />
@@ -52,7 +56,7 @@
                                 <ui:DataBinding property="value" data-source-path="activeVideo.videoClipCurrentTime" binding-mode="TwoWay" />
                             </Bindings>
                         </ui:Slider>
-                        <ui:VisualElement name="video-time-labels" style="flex-grow: 1; flex-direction: row; font-size: 10px; align-self: center; align-items: center; margin-bottom: 6px;">
+                        <ui:VisualElement name="video-time-labels" class="video-time-labels" style="flex-grow: 1; flex-direction: row; font-size: 10px; align-self: center; align-items: center; margin-bottom: 0; margin-top: 0; margin-right: 0; margin-left: 0;">
                             <ui:Label text="Label" name="video-time-current-label" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
                                 <Bindings>
                                     <ui:DataBinding property="text" data-source-path="activeVideo.videoClipCurrentTimeFormatted" binding-mode="ToTarget" />

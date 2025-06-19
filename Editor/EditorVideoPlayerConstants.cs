@@ -15,4 +15,5 @@ public class EditorVideoPlayerConstants
 
     public const string PrevButtonIcon = "Animation.PrevKey";
 
+    public const string VolumeButtonIcon = "d_Profiler.Audio";
 }
